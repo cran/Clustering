@@ -6,7 +6,7 @@ package_bad <- c("ClusterR","clusterr")
 package_good <- c("ClusterR","cluster")
 metrics_good <- c("entropy")
 metrics_bad <- c("entropyy")
-df <- Clustering::clustering(df = cluster::agriculture, algorithm = c('gmm','clara'), min = 4, max = 5, metrics = c('precision','dunn'),variables = TRUE);
+df <- Clustering::clustering(df = cluster::agriculture, algorithm = c('gmm','clara'), min = 4, max = 5, metrics = c('precision','dunn'));
 
 
 test_that("validates that the input parameters are correct",{

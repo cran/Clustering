@@ -207,7 +207,7 @@ info_internal <- function (metrics, info, size, variables) {
   result[4] <- info$dataset
   result[5] <- info$ranking
 
-  if (is.null(variables))
+  if (!is.null(variables))
     result[6] <- info$timeInternal
   else
     result[6] <- round(as.numeric(info$timeInternal), digits = 4)
@@ -215,17 +215,9 @@ info_internal <- function (metrics, info, size, variables) {
   position <- 7
 
   for (i in 1:length(metrics)) {
-    if (tolower(metrics[i] == CONST_DUNN_METRIC)) {
-      if (is.null(variables))
-        result[position] <- info$dunn
-      else
-        result[position] <-
-          as.numeric(format(as.numeric(info$dunn), digits = 4))
-      position <- position + 1
-    }
 
     if (tolower(metrics[i] == CONST_CONNECTIVITY_METRIC)) {
-      if (is.null(variables))
+      if (!is.null(variables))
         result[position] <- info$connectivity
       else
         result[position] <-
@@ -233,8 +225,17 @@ info_internal <- function (metrics, info, size, variables) {
       position <- position + 1
     }
 
+    if (tolower(metrics[i] == CONST_DUNN_METRIC)) {
+      if (!is.null(variables))
+        result[position] <- info$dunn
+      else
+        result[position] <-
+          as.numeric(format(as.numeric(info$dunn), digits = 4))
+      position <- position + 1
+    }
+
     if (tolower(metrics[i] == CONST_SILHOUETTE_METRIC)) {
-      if (is.null(variables))
+      if (!is.null(variables))
         result[position] <- info$silhouette
       else
         result[position] <-
@@ -267,7 +268,7 @@ info_external <- function (metrics, info, size, variables) {
   result[4] <- info$dataset
   result[5] <- info$ranking
 
-  if (is.null(variables))
+  if (!is.null(variables))
     result[6] <- info$timeExternal
   else
     result[6] <- round(as.numeric(info$timeExternal), digits = 4)
@@ -276,7 +277,7 @@ info_external <- function (metrics, info, size, variables) {
 
   for (i in 1:length(metrics)) {
     if (tolower(metrics[i] == CONST_ENTROPY_METRIC)) {
-      if (is.null(variables))
+      if (!is.null(variables))
         result[position] <- info$entropy
       else
         result[position] <-
@@ -285,7 +286,7 @@ info_external <- function (metrics, info, size, variables) {
     }
 
     if (tolower(metrics[i] == CONST_VARIATION_INFORMATION_METRIC)) {
-      if (is.null(variables))
+      if (!is.null(variables))
         result[position] <- info$variation_information
       else
         result[position] <-
@@ -294,7 +295,7 @@ info_external <- function (metrics, info, size, variables) {
     }
 
     if (tolower(metrics[i] == CONST_PRECISION_METRIC)) {
-      if (is.null(variables))
+      if (!is.null(variables))
         result[position] <- info$precision
       else
         result[position] <-
@@ -303,7 +304,7 @@ info_external <- function (metrics, info, size, variables) {
     }
 
     if (tolower(metrics[i] == CONST_RECALL_METRIC)) {
-      if (is.null(variables))
+      if (!is.null(variables))
         result[position] <- info$recall
       else
         result[position] <-
@@ -313,7 +314,7 @@ info_external <- function (metrics, info, size, variables) {
     }
 
     if (tolower(metrics[i] == CONST_FOWLKES_MALLOWS_INDEX_METRIC)) {
-      if (is.null(variables))
+      if (!is.null(variables))
         result[position] <- info$fowlkes_mallows_index
       else
         result[position] <-
@@ -323,7 +324,7 @@ info_external <- function (metrics, info, size, variables) {
     }
 
     if (tolower(metrics[i] == CONST_F_MEASURE_METRIC)) {
-      if (is.null(variables))
+      if (!is.null(variables))
         result[position] <- info$f_measure
       else
         result[position] <-

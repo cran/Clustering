@@ -45,7 +45,7 @@ calculate_result <-
            variables) {
     resultadoValores = list()
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_timeExternal <-
         sort(x = as.vector(unlist(timeExternal)),
              decreasing = FALSE,
@@ -56,7 +56,7 @@ calculate_result <-
              decreasing = FALSE,
              index.return = TRUE)$x
     }
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_entropy <-
         if (!is.null(entropy))
           sort(x = as.vector(unlist(entropy)),
@@ -74,7 +74,7 @@ calculate_result <-
         NULL
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_variation_information <-
         if (!is.null(variation_information))
           sort(
@@ -96,7 +96,7 @@ calculate_result <-
         NULL
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_precision <-
         if (!is.null(precision))
           sort(x = as.vector(unlist(precision)),
@@ -114,7 +114,7 @@ calculate_result <-
         NULL
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_recall <-
         if (!is.null(recall))
           sort(x = as.vector(unlist(recall)),
@@ -132,7 +132,7 @@ calculate_result <-
         NULL
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_fowlkes_mallows_index <-
         if (!is.null(fowlkes_mallows_index))
           sort(
@@ -154,7 +154,7 @@ calculate_result <-
         NULL
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_f_measure <-
         if (!is.null(f_measure))
           sort(x = as.vector(unlist(f_measure)),
@@ -172,7 +172,7 @@ calculate_result <-
         NULL
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_timeInternal <-
        sort(  x = as.vector(unlist(timeInternal)),
              decreasing = FALSE,
@@ -184,7 +184,7 @@ calculate_result <-
              index.return = TRUE)$x
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_dunn <-
         if (!is.null(dunn))
           sort(x = as.vector(unlist(dunn)),
@@ -202,7 +202,7 @@ calculate_result <-
         NULL
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_connectivity <-
         if (!is.null(connectivity))
           sort(x = as.vector(unlist(connectivity)),
@@ -220,7 +220,7 @@ calculate_result <-
         NULL
     }
 
-    if (is.null(variables)) {
+    if (!is.null(variables)) {
       sort_silhouette <-
         if (!is.null(silhouette))
           sort(x = as.vector(unlist(silhouette)),
@@ -247,44 +247,44 @@ calculate_result <-
     resultadoValores$ranking = ranking
 
     if (!is.null(sort_timeExternal))
-      if (is.null(variables))
+      if (!is.null(variables))
         resultadoValores$timeExternal = match(ranking, sort_timeExternal)
     else
       resultadoValores$timeExternal = round(as.numeric(sort_timeExternal[ranking]), digits = 4)
 
     if (!is.null(sort_entropy))
-      if (is.null(variables))
-        resultadoValores$entropy = match(ranking, sort_entropy)
+      if (!is.null(variables))
+        resultadoValores$entropy = sort_entropy[ranking]
     else
       resultadoValores$entropy =round(as.numeric(sort_entropy[ranking]), digits = 4)
     if (!is.null(sort_variation_information))
-      if (is.null(variables))
-      resultadoValores$variation_information = match(ranking, sort_variation_information)
+      if (!is.null(variables))
+      resultadoValores$variation_information = sort_variation_information[ranking]
     else
       resultadoValores$variation_information = round(as.numeric(sort_variation_information[ranking]), digits = 4)
     if (!is.null(sort_precision))
-      if (is.null(variables)) resultadoValores$precision = match(ranking, sort_precision)
+      if (!is.null(variables)) resultadoValores$precision = sort_precision[ranking]
     else resultadoValores$precision = round(as.numeric(sort_precision[ranking]), digits = 4)
     if (!is.null(sort_recall))
-      if (is.null(variables)) resultadoValores$recall = match(ranking, sort_recall)
+      if (!is.null(variables)) resultadoValores$recall = sort_recall[ranking]
     else resultadoValores$recall = round(as.numeric(sort_recall[ranking]), digits = 4)
-    if (!is.null(sort_fowlkes_mallows_index))
-      if (is.null(variables)) resultadoValores$fowlkes_mallows_index = match(ranking, sort_fowlkes_mallows_index)
-    else resultadoValores$fowlkes_mallows_index = round(as.numeric(sort_fowlkes_mallows_index[ranking]), digits = 4)
     if (!is.null(sort_f_measure))
-      if (is.null(variables)) resultadoValores$f_measure = match(ranking, sort_f_measure)
+      if (!is.null(variables)) resultadoValores$f_measure = sort_f_measure[ranking]
     else resultadoValores$f_measure = round(as.numeric(sort_f_measure[ranking]), digits = 4)
-    if (!is.null(sort_dunn))
-      if (is.null(variables)) resultadoValores$dunn = match(ranking, sort_dunn)
-    else resultadoValores$dunn = round(as.numeric(sort_dunn[ranking]), digits = 4)
+    if (!is.null(sort_fowlkes_mallows_index))
+      if (!is.null(variables)) resultadoValores$fowlkes_mallows_index = sort_fowlkes_mallows_index[ranking]
+    else resultadoValores$fowlkes_mallows_index = round(as.numeric(sort_fowlkes_mallows_index[ranking]), digits = 4)
     if (!is.null(sort_connectivity))
-      if (is.null(variables)) resultadoValores$connectivity = match(ranking, sort_connectivity)
+      if (!is.null(variables)) resultadoValores$connectivity = sort_connectivity[ranking]
     else resultadoValores$connectivity = round(as.numeric(sort_connectivity[ranking]), digits = 4)
+    if (!is.null(sort_dunn))
+      if (!is.null(variables)) resultadoValores$dunn = sort_dunn[ranking]
+    else resultadoValores$dunn = round(as.numeric(sort_dunn[ranking]), digits = 4)
     if (!is.null(sort_silhouette))
-      if (is.null(variables)) resultadoValores$silhouette = match(ranking, sort_silhouette)
+      if (!is.null(variables)) resultadoValores$silhouette = sort_silhouette[ranking]
     else resultadoValores$silhouette = round(as.numeric(sort_silhouette[ranking]), digits = 4)
     if (!is.null(sort_timeInternal))
-      if (is.null(variables)) resultadoValores$timeInternal = match(ranking, sort_timeInternal)
+      if (!is.null(variables)) resultadoValores$timeInternal = match(ranking, sort_timeInternal)
     else resultadoValores$timeInternal = round(as.numeric(sort_timeInternal[ranking]), digits = 4)
 
     return (resultadoValores)

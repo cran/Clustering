@@ -157,7 +157,6 @@ external_validation = function(column_dataset_label,
           entropy_metric (conversion_data_frame,
                           table_convert,
                           column_dataset_label)
-
       if (me == CONST_VARIATION_INFORMATION_METRIC)
         variation_information =
         variation_information_metric(conversion_data_frame, table_convert)

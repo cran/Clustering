@@ -137,10 +137,10 @@ connectivity_metric =
     connectivity = 0.0
 
     connectivity = tryCatch({
-      connectivity(
+      calculate_connectivity(
         distance = distance,
         clusters = clusters_vector,
-        Data = data,
+        datadf = data,
         method = method
       )
     },
@@ -292,7 +292,7 @@ calculate_dunn <- function(distance=NULL, clusters, datadf=NULL, method="euclide
 #' @keywords internal
 #'
 
-connectivity <- function(distance=NULL, clusters, datadf=NULL, neighbSize=10, method="euclidean"){
+calculate_connectivity <- function(distance=NULL, clusters, datadf=NULL, neighbSize=10, method="euclidean"){
 
   distance_null <- ifelse (is.null(distance),1,0)
   data_null <- ifelse (is.null(datadf),1,0)

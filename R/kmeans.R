@@ -20,9 +20,9 @@ kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
   if (class(data) != 'matrix')
     stop('The field must be a matrix or dataframe')
 
-  numeric_cluster <- ifelse(!is.numeric(clusters),1,0)
+  numeric_cluster <- ifelse(!is.numeric(clusters), 1, 0)
 
-  if (sum(numeric_cluster)>0)
+  if (sum(numeric_cluster) > 0)
     stop('The field clusters must be a numeric')
 
   kmeans_rcpp <- tryCatch({
@@ -34,43 +34,32 @@ kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
   })
 
   if (!is.null(kmeans_rcpp)) {
-    pr_kmeans_rcpp <-
+    ev_kmeans_rcpp <-
       tryCatch({
-        predict_KMeans(data = data, CENTROIDS = kmeans_rcpp$centroids)
-      },
-
-      error = function(cond) {
-        return(CONST_NULL)
-      })
-
-    if (!is.null(pr_kmeans_rcpp)) {
-      ev_kmeans_rcpp <-
-        tryCatch({
-          external_validation(column_dataset_label = c(data[, columnClass]),
-                              clusters_vector = kmeans_rcpp$clusters,metric)
-        },
-
-        error = function(cond) {
-          ev_kmeans_rcpp = initializeExternalValidation()
-        })
-
-      iv_kmeans_rcpp <- tryCatch({
-        internal_validation(
-          distance = CONST_NULL,
+        external_validation(
+          column_dataset_label = c(data[, columnClass]),
           clusters_vector = kmeans_rcpp$clusters,
-          data = data,
-          method = CONST_EUCLIDEAN,
           metric
         )
       },
 
       error = function(cond) {
-        iv_kmeans_rcpp = initializeInternalValidation()
+        ev_kmeans_rcpp = initializeExternalValidation()
       })
-    } else {
-      ev_kmeans_rcpp = initializeExternalValidation()
+
+    iv_kmeans_rcpp <- tryCatch({
+      internal_validation(
+        distance = CONST_NULL,
+        clusters_vector = kmeans_rcpp$clusters,
+        data = data,
+        method = CONST_EUCLIDEAN,
+        metric
+      )
+    },
+
+    error = function(cond) {
       iv_kmeans_rcpp = initializeInternalValidation()
-    }
+    })
 
   } else {
     ev_kmeans_rcpp = initializeExternalValidation()
@@ -110,9 +99,9 @@ kmeans_arma_method = function(data, clusters, columnClass, metric) {
   if ('data.frame' %in% class(data))
     data = as.matrix(data)
 
-  numeric_cluster <- ifelse(!is.numeric(clusters),1,0)
+  numeric_cluster <- ifelse(!is.numeric(clusters), 1, 0)
 
-  if (sum(numeric_cluster)>0)
+  if (sum(numeric_cluster) > 0)
     stop('The field clusters must be a numeric')
 
   kmeans_arma <- tryCatch({
@@ -137,7 +126,7 @@ kmeans_arma_method = function(data, clusters, columnClass, metric) {
         tryCatch({
           external_validation(
             column_dataset_label = c(data[, columnClass]),
-            clusters_vector = as.vector(pr_kmeans_arma,metric)
+            clusters_vector = as.vector(pr_kmeans_arma, metric)
           )
         },
 
@@ -206,9 +195,9 @@ mini_kmeans_method = function(data, clusters, columnClass, metric) {
   if (class(data) != 'matrix')
     stop('The field must be a matrix or dataframe')
 
-  numeric_cluster <- ifelse(!is.numeric(clusters),1,0)
+  numeric_cluster <- ifelse(!is.numeric(clusters), 1, 0)
 
-  if (sum(numeric_cluster)>0)
+  if (sum(numeric_cluster) > 0)
     stop('The field clusters must be a numeric')
 
   mini_kmeans <- tryCatch({
@@ -235,7 +224,7 @@ mini_kmeans_method = function(data, clusters, columnClass, metric) {
         tryCatch({
           external_validation(
             column_dataset_label = c(data[, columnClass]),
-            clusters_vector = as.vector(pr_mini_kmeans,metric)
+            clusters_vector = as.vector(pr_mini_kmeans, metric)
           )
         },
 
