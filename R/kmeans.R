@@ -17,9 +17,6 @@ kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
   if ('data.frame' %in% class(data))
     data = as.matrix(data)
 
-  if (class(data) != 'matrix')
-    stop('The field must be a matrix or dataframe')
-
   numeric_cluster <- ifelse(!is.numeric(clusters), 1, 0)
 
   if (sum(numeric_cluster) > 0)
@@ -191,9 +188,6 @@ mini_kmeans_method = function(data, clusters, columnClass, metric) {
 
   if ('data.frame' %in% class(data))
     data = as.matrix(data)
-
-  if (class(data) != 'matrix')
-    stop('The field must be a matrix or dataframe')
 
   numeric_cluster <- ifelse(!is.numeric(clusters), 1, 0)
 

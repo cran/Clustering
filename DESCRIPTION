@@ -1,6 +1,6 @@
 Package: Clustering
-Version: 1.1
-Date: 2020-04-03
+Version: 1.2
+Date: 2020-04-10
 Title: Execution of Multiple Clustering Algorithm
 Author: Luis Alfonso Perez Martos [aut, cre]
 Maintainer: Luis Alfonso Perez Martos <lapm0001@gmail.com>
@@ -13,7 +13,10 @@ LazyData: true
 RoxygenNote: 7.1.0
 Repository: CRAN
 Imports: apcluster, cluster, ClusterR, advclust, pvclust, gama, amap,
-        stats, pracma, tools, gmp, utils, xtable, sqldf, data.table
+        stats, pracma, tools, gmp, utils, xtable, sqldf, data.table,
+        tidyverse, kableExtra
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2020-04-04 16:23:53 UTC; luis
-Date/Publication: 2020-04-05 00:00:10 UTC
+Packaged: 2020-04-11 07:22:07 UTC; luis
+Date/Publication: 2020-04-11 14:30:18 UTC
