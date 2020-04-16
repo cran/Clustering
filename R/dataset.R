@@ -807,3 +807,116 @@ print.result_internal_algorithm_by_metric <- function(x, ...)
   cat("Result:	\n");		print(x$result, ...)
   invisible(x)
 }
+
+
+#' Method that graphically compares external evaluation metrics
+#'
+#' @param df df data matrix or data frame
+#' @param metric string with the name of the metric select to evaluate
+#'
+#' @export
+#'
+#' plot_external_validation
+#'
+#' @importFrom
+#'
+#' ggplot2 ggplot aes_string geom_point xlab ylab labs scale_y_continuous
+#'
+#' @examples
+#'
+#' df <- clustering(df = cluster::agriculture, min = 4, max = 5, algorith='gmm')
+#'
+#' plot_external_validation(df,"precision")
+#'
+
+plot_external_validation <- function(df, metric) {
+
+  df_best_ranked <- best_ranked_external_metrics(df$result)
+
+  hasExternalMetrics <- ifelse(df$hasExternalMetrics, 1, 0)
+
+  maximum <- as.numeric(max_value_metric(df$result,metric))
+
+  maximum <-  ifelse(is.infinite(maximum),10000,maximum)
+
+  interval <- maximum / 4
+
+  break_points <- (seq(0,maximum,by=interval))
+
+  if (hasExternalMetrics == 0)
+    stop("There are no external metrics to represent")
+
+  exits_metric = FALSE
+
+
+  for (col in colnames(df_best_ranked$result)) {
+    if (col == metric) {
+      exits_metric = TRUE
+    }
+  }
+
+  if (exits_metric) {
+
+    name_metric <- metric
+    metric <- paste("as.numeric(",metric,")")
+
+    ggplot(df_best_ranked$result,
+           aes_string(x = "Clusters", y = metric, color = "Algorithm")) + ggplot2::geom_point() + xlab(toupper("Clustering"))+ ylab(toupper(name_metric)) + labs(color='Algorithm') + ggplot2::scale_y_continuous(breaks=as.numeric(break_points),limits=c(0, maximum))
+  } else
+    stop("the metric indicates does not exist in the dataframe")
+}
+
+
+
+#' Method that graphically compares internal evaluation metrics
+#'
+#' @param df df data matrix or data frame
+#' @param metric string with the name of the metric select to evaluate
+#'
+#' @export
+#'
+#' plot_internal_validation
+#'
+#' @examples
+#'
+#' df <- clustering(df = cluster::agriculture, min = 4, max = 5, algorith='gmm')
+#'
+#' plot_internal_validation(df,"dunn")
+#'
+
+plot_internal_validation <- function(df, metric) {
+
+  df_best_ranked <- best_ranked_internal_metrics(df$result)
+
+  hasInternalMetrics <- ifelse(df$hasInternalMetrics, 1, 0)
+
+  maximum <- as.numeric(max_value_metric(df$result,metric))
+
+  maximum <-  ifelse(is.infinite(maximum),10000,maximum)
+
+  interval <- maximum / 4
+
+  break_points <- (seq(0,maximum,by=interval))
+
+  if (hasInternalMetrics == 0)
+    stop("There are no internal metrics to represent")
+
+  exits_metric = FALSE
+
+
+  for (col in colnames(df_best_ranked$result)) {
+    if (col == metric) {
+      exits_metric = TRUE
+    }
+  }
+
+  if (exits_metric) {
+
+    name_metric <- metric
+    metric <- paste("as.numeric(",metric,")")
+
+    ggplot(df_best_ranked$result,
+           aes_string(x = "Clusters", y = metric, color = "Algorithm")) + ggplot2::geom_point() + xlab(toupper("Clustering"))+ ylab(toupper(name_metric)) + labs(color='Algorithm') + ggplot2::scale_y_continuous(breaks=as.numeric(break_points),limits=c(0, maximum))
+  } else
+    stop("the metric indicates does not exist in the dataframe")
+}

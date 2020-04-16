@@ -549,6 +549,27 @@ show_result_external_algorithm_by_metric <-
 
   }
 
+#' Method that return max value of metric
+#'
+#' @param df data matrix or data frame
+#' @param metric metric to evaluate
+#'
+#' @return a value with maximum column
+#'
+#' @keywords internal
+#'
+
+max_value_metric <- function(df,metric) {
+
+  table_res <- data.table(df)
+
+  query <-
+    paste("select MAX(",metric,") as maxi from table_res ");
+
+  return (sqldf(query));
+
+}
+
 #' Method that returns a table with the algorithm and the metric indicated as parameters
 #'
 #' @param df data matrix or data frame

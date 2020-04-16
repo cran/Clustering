@@ -4,10 +4,10 @@
 \alias{path_dataset}
 \title{Method that return a list of files that exists in a directory}
 \usage{
-path_dataset(path)
+path_dataset(directory)
 }
 \arguments{
-\item{path}{of the directory}
+\item{directory}{of the directory}
 }
 \value{
 a vector with the files existing into of a directory

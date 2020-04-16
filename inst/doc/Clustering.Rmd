@@ -171,3 +171,12 @@ df_best_validation_internal <-
 
 ```
 In this case we can see that depending on the evaluation you want to make, one algorithm or another is chosen.
+
+If we want to see graphically the representation of any metric as a function of the number of clusters and algorithm we can do it in the following way depending if the evaluation metric is internal or external
+
+```{r fig.show='hold', fig.width=7, fig.align ='center', warning=FALSE }
+
+Clustering::plot_external_validation(df,"variation_information")
+
+```
+

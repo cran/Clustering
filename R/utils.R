@@ -17,16 +17,16 @@ specify_decimal <-
 
 #' Method that return a list of files that exists in a directory
 #'
-#' @param path of the directory
+#' @param directory of the directory
 #'
 #' @return a vector with the files existing into of a directory
 #'
 #' @keywords internal
 #'
 
-path_dataset = function (path) {
+path_dataset = function (directory) {
 
-  directory <- getwd()
+
   on.exit(setwd(directory))
 
   files <- list.files(path = directory, pattern = "\\.dat")

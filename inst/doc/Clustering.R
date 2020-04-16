@@ -94,3 +94,8 @@ df_best_validation_internal <-
   kableExtra::kable_styling() %>% kableExtra::row_spec(3:5, bold = TRUE, italic = TRUE, color = "white", background = "#006d38") %>% kableExtra::scroll_box(width = "100%")
 
 
+## ----fig.show='hold', fig.width=7, fig.align ='center', warning=FALSE---------
+
+Clustering::plot_external_validation(df,"variation_information")
+
+
