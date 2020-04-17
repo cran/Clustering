@@ -1,5 +1,5 @@
-1f4dfbb3549854508bad22bdfa707881 *DESCRIPTION
-0bb0a56f030842b2354c83f9d645c15d *NAMESPACE
+48d4fa0782e4e690ff51941db4c4cb46 *DESCRIPTION
+550310a4efe0380d3c920274c30a7e9b *NAMESPACE
 2ac99f79c9115f72a2c5e787de4019b1 *R/aggExCluster.R
 908ac78da85fb4da39770dafbe90370e *R/agnes.R
 d51ddd982d47acac91b0d81f4f1a0f43 *R/algorithm.R
@@ -9,7 +9,7 @@ d51ddd982d47acac91b0d81f4f1a0f43 *R/algorithm.R
 5bd933ea024a78f66695dbb700252e8e *R/clara.R
 3183a3b8a9ad220ac70e38a0d48a1569 *R/constants.R
 71307a50e50b692c84cf40e1008ba5d4 *R/daisy.R
-f162c984a94ef091d6ffdad59cfce4f3 *R/dataset.R
+7f3127d3fe200eef7f3687fe58b059ee *R/dataset.R
 74328859cecf4741d48dbaed268e7a61 *R/diana.R
 19bcd2deea60f2d9ee21b667eae30ce2 *R/evaluate_column_dataset.R
 91962b3d270a69bebe542b3af820b7c3 *R/external_validation.R
@@ -35,9 +35,9 @@ e5d2889dd9342a3c47910b32b4c080e8 *data/basketball.RData
 3e62aac65969f078bbe4d3d4bea3fd26 *data/stock.RData
 af41273d126ada29d5bd03099ff09a93 *data/stulong.RData
 d36ff859dec75f97154a532511bf5236 *data/weather.RData
-e2421a99b37841106db1e27ef049b0c1 *inst/doc/Clustering.R
-4e76476817735308e0496a7c53a9c874 *inst/doc/Clustering.Rmd
-209d9f3dee04ab598e4ec0ebfb5fa1c3 *inst/doc/Clustering.html
+39e182d2c62ab3c6f51fd637b561267e *inst/doc/Clustering.R
+052bb2fbe152a9856152f34df651a45a *inst/doc/Clustering.Rmd
+a0d0eb627501c8876b6e2f0f8b7b2aba *inst/doc/Clustering.html
 f619054d2c5c51ac017778773f716098 *man/aggExCluster_euclidean.Rd
 c0ba70210e66eb2e1e23f560cdecc92c *man/agnes_euclidean_method.Rd
 fd31288114a81980c78d4520b0ce0ebb *man/agnes_manhattan_method.Rd
@@ -159,4 +159,4 @@ d364dbd7e17708e57a43256b1602bf22 *man/stock.Rd
 29b821549bde59c145062f4f26c344d3 *man/variation_information_metric.Rd
 663fa2a0a841dfb6afd6ab17d1d7e249 *man/weather.Rd
 b9210a64116468d3ee92e4b07adc68d3 *tests/testthat/test-clustering.R
-4e76476817735308e0496a7c53a9c874 *vignettes/Clustering.Rmd
+052bb2fbe152a9856152f34df651a45a *vignettes/Clustering.Rmd

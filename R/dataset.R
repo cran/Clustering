@@ -15,6 +15,9 @@
 #'
 #' @return returns a matrix with the result of running all the metrics of the algorithms contained in the packages we indicated.
 #'
+#' @import
+#' glue
+#'
 #' @importFrom
 #' apcluster aggExCluster cutree apclusterK negDistMat
 #'
