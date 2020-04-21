@@ -250,42 +250,42 @@ calculate_result <-
       if (!is.null(variables))
         resultadoValores$timeExternal = match(ranking, sort_timeExternal)
     else
-      resultadoValores$timeExternal = round(as.numeric(sort_timeExternal[ranking]), digits = 4)
+      resultadoValores$timeExternal = format(round(as.numeric(sort_timeExternal[ranking]), digits = 4),scientific = FALSE)
 
     if (!is.null(sort_entropy))
       if (!is.null(variables))
         resultadoValores$entropy = sort_entropy[ranking]
     else
-      resultadoValores$entropy =round(as.numeric(sort_entropy[ranking]), digits = 4)
+      resultadoValores$entropy =format(round(as.numeric(sort_entropy[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_variation_information))
       if (!is.null(variables))
       resultadoValores$variation_information = sort_variation_information[ranking]
     else
-      resultadoValores$variation_information = round(as.numeric(sort_variation_information[ranking]), digits = 4)
+      resultadoValores$variation_information = format(round(as.numeric(sort_variation_information[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_precision))
       if (!is.null(variables)) resultadoValores$precision = sort_precision[ranking]
-    else resultadoValores$precision = round(as.numeric(sort_precision[ranking]), digits = 4)
+    else resultadoValores$precision = format(round(as.numeric(sort_precision[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_recall))
       if (!is.null(variables)) resultadoValores$recall = sort_recall[ranking]
-    else resultadoValores$recall = round(as.numeric(sort_recall[ranking]), digits = 4)
+    else resultadoValores$recall = format(round(as.numeric(sort_recall[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_f_measure))
       if (!is.null(variables)) resultadoValores$f_measure = sort_f_measure[ranking]
-    else resultadoValores$f_measure = round(as.numeric(sort_f_measure[ranking]), digits = 4)
+    else resultadoValores$f_measure = format(round(as.numeric(sort_f_measure[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_fowlkes_mallows_index))
       if (!is.null(variables)) resultadoValores$fowlkes_mallows_index = sort_fowlkes_mallows_index[ranking]
-    else resultadoValores$fowlkes_mallows_index = round(as.numeric(sort_fowlkes_mallows_index[ranking]), digits = 4)
+    else resultadoValores$fowlkes_mallows_index = format(round(as.numeric(sort_fowlkes_mallows_index[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_connectivity))
       if (!is.null(variables)) resultadoValores$connectivity = sort_connectivity[ranking]
-    else resultadoValores$connectivity = round(as.numeric(sort_connectivity[ranking]), digits = 4)
+    else resultadoValores$connectivity = format(round(as.numeric(sort_connectivity[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_dunn))
       if (!is.null(variables)) resultadoValores$dunn = sort_dunn[ranking]
-    else resultadoValores$dunn = round(as.numeric(sort_dunn[ranking]), digits = 4)
+    else resultadoValores$dunn = format(round(as.numeric(sort_dunn[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_silhouette))
       if (!is.null(variables)) resultadoValores$silhouette = sort_silhouette[ranking]
-    else resultadoValores$silhouette = round(as.numeric(sort_silhouette[ranking]), digits = 4)
+    else resultadoValores$silhouette = format(round(as.numeric(sort_silhouette[ranking]), digits = 4),scientific = FALSE)
     if (!is.null(sort_timeInternal))
       if (!is.null(variables)) resultadoValores$timeInternal = match(ranking, sort_timeInternal)
-    else resultadoValores$timeInternal = round(as.numeric(sort_timeInternal[ranking]), digits = 4)
+    else resultadoValores$timeInternal = format(round(as.numeric(sort_timeInternal[ranking]), digits = 4),scientific = FALSE)
 
     return (resultadoValores)
 
@@ -415,7 +415,7 @@ calculate_best_validation_external_by_metrics <-
 
     for (r in 1:nrow(calculate_best_external_by_metrics)) {
       for (c in 3:ncol(calculate_best_external_by_metrics)) {
-        calculate_best_external_by_metrics[r,c] = round(as.numeric(calculate_best_external_by_metrics[r,c]), digits = 4)
+        calculate_best_external_by_metrics[r,c] = format(round(as.numeric(calculate_best_external_by_metrics[r,c]), digits = 4),scientific = FALSE)
       }
     }
 
@@ -495,7 +495,7 @@ calculate_best_validation_internal_by_metrics <-
 
     for (r in 1:nrow(calculate_best_internal_by_metrics)) {
       for (c in 3:ncol(calculate_best_internal_by_metrics)) {
-        calculate_best_internal_by_metrics[r,c] = round(as.numeric(calculate_best_internal_by_metrics[r,c]), digits = 4)
+        calculate_best_internal_by_metrics[r,c] = format(round(as.numeric(calculate_best_internal_by_metrics[r,c]), digits = 4),scientific = FALSE)
       }
     }
 
@@ -539,7 +539,7 @@ show_result_external_algorithm_by_metric <-
 
     for (r in 1:nrow(show_result_external_by_metrics)) {
       for (c in 3:ncol(show_result_external_by_metrics)) {
-        show_result_external_by_metrics[r,c] = round(as.numeric(show_result_external_by_metrics[r,c]), digits = 4)
+        show_result_external_by_metrics[r,c] = format(round(as.numeric(show_result_external_by_metrics[r,c]), digits = 4),scientific = FALSE)
       }
     }
 
@@ -604,7 +604,7 @@ show_result_internal_algorithm_by_metric <-
 
     for (r in 1:nrow(show_result_internal_by_metrics)) {
       for (c in 3:ncol(show_result_internal_by_metrics)) {
-        show_result_internal_by_metrics[r,c] = round(as.numeric(as.numeric(show_result_internal_by_metrics[r,c])), digits = 4)
+        show_result_internal_by_metrics[r,c] = format(round(as.numeric(as.numeric(show_result_internal_by_metrics[r,c])), digits = 4),scientific = FALSE)
       }
     }
 

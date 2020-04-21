@@ -210,7 +210,7 @@ info_internal <- function (metrics, info, size, variables) {
   if (!is.null(variables))
     result[6] <- info$timeInternal
   else
-    result[6] <- round(as.numeric(info$timeInternal), digits = 4)
+    result[6] <- format(round(as.numeric(info$timeInternal), digits = 4),scientific = FALSE)
 
   position <- 7
 
@@ -271,7 +271,7 @@ info_external <- function (metrics, info, size, variables) {
   if (!is.null(variables))
     result[6] <- info$timeExternal
   else
-    result[6] <- round(as.numeric(info$timeExternal), digits = 4)
+    result[6] <- format(round(as.numeric(info$timeExternal), digits = 4),scientific = FALSE)
 
   position <- 7
 

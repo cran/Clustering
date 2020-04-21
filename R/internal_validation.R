@@ -109,9 +109,13 @@ internal_validation = function(distance = NULL,
 
 
   result = list(
-    "connectivity" = round(as.numeric(connectivity), digits = 4),
-    "dunn" = round(as.numeric(dunn), digits = 4),
-    "silhouette" = round(as.numeric(silhouette), digits = 4),
+    "connectivity" = format(round(as.numeric(connectivity), digits = 4),scientific = FALSE),
+    "dunn" = format(round(as.numeric(dunn), digits = 4),scientific = FALSE),
+    "silhouette" = format(round(
+      as.numeric(silhouette),
+      digits = 4),
+      scientific = FALSE
+    ),
     "time" = round(time_internal, digits = 4)
   )
 
@@ -169,7 +173,7 @@ dunn_metric = function(dist, clusters_vector, data, me) {
   dunn = 0.0
 
   dunn = tryCatch({
-    calculate_dunn(dist,clusters_vector,data,me)
+    calculate_dunn(dist, clusters_vector, data, me)
   },
 
   error = function(cond) {
@@ -227,9 +231,9 @@ initializeInternalValidation = function() {
 
 
   result = list(
-    "connectivity" = round(as.numeric(connectivity), digits = 4),
-    "dunn" = round(as.numeric(dunn), digits = 4),
-    "silhouette" = round(as.numeric(silhouette), digits = 4),
+    "connectivity" = format(round(as.numeric(connectivity), digits = 4), scientific = FALSE),
+    "dunn" = format(round(as.numeric(dunn), digits = 4), scientific = FALSE),
+    "silhouette" = format(round(as.numeric(silhouette), digits = 4), scientific = FALSE),
     "time" = round(as.numeric(time), digits = 4)
   )
 
@@ -249,34 +253,42 @@ initializeInternalValidation = function() {
 #' @keywords internal
 #'
 
-calculate_dunn <- function(distance=NULL, clusters, datadf=NULL, method="euclidean"){
+calculate_dunn <-
+  function(distance = NULL,
+           clusters,
+           datadf = NULL,
+           method = "euclidean") {
+    distance_null <- ifelse (is.null(distance), 1, 0)
+    data_null <- ifelse (is.null(datadf), 1, 0)
 
-  distance_null <- ifelse (is.null(distance),1,0)
-  data_null <- ifelse (is.null(datadf),1,0)
+    if (distance_null == 1 &&
+        data_null == 1)
+      stop("The distance or datadf field must be filled in")
+    if (distance_null == 1)
+      distance <- as.matrix(dist(datadf, method = method))
 
-  if (distance_null == 1 && data_null == 1) stop("The distance or datadf field must be filled in")
-  if (distance_null == 1) distance <- as.matrix(dist(datadf, method=method))
+    type_distance <- ifelse ('dist' %in% class(datadf), 1, 0)
 
-  type_distance <- ifelse ('dist' %in% class(datadf),1,0)
+    if (type_distance == 1)
+      distance <- as.matrix(distance)
+    nc <- max(clusters)
+    interClust <- matrix(NA, nc, nc)
+    intraClust <- rep(NA, nc)
 
-  if (type_distance == 1) distance <- as.matrix(distance)
-  nc <- max(clusters)
-  interClust <- matrix(NA, nc, nc)
-  intraClust <- rep(NA, nc)
-
-  for (i in 1:nc) {
-    c1 <- which(clusters==i)
-    for (j in i:nc) {
-      if (j==i) intraClust[i] <- max(distance[c1,c1])
-      if (j>i) {
-        c2 <- which(clusters==j)
-        interClust[i,j] <- min(distance[c1,c2])
+    for (i in 1:nc) {
+      c1 <- which(clusters == i)
+      for (j in i:nc) {
+        if (j == i)
+          intraClust[i] <- max(distance[c1, c1])
+        if (j > i) {
+          c2 <- which(clusters == j)
+          interClust[i, j] <- min(distance[c1, c2])
+        }
       }
     }
+    dunn <- min(interClust, na.rm = TRUE) / max(intraClust)
+    return(dunn)
   }
-  dunn <- min(interClust,na.rm=TRUE)/max(intraClust)
-  return(dunn)
-}
 
 
 #' Method to calculate the connectivity
@@ -292,19 +304,34 @@ calculate_dunn <- function(distance=NULL, clusters, datadf=NULL, method="euclide
 #' @keywords internal
 #'
 
-calculate_connectivity <- function(distance=NULL, clusters, datadf=NULL, neighbSize=10, method="euclidean"){
+calculate_connectivity <-
+  function(distance = NULL,
+           clusters,
+           datadf = NULL,
+           neighbSize = 10,
+           method = "euclidean") {
+    distance_null <- ifelse (is.null(distance), 1, 0)
+    data_null <- ifelse (is.null(datadf), 1, 0)
 
-  distance_null <- ifelse (is.null(distance),1,0)
-  data_null <- ifelse (is.null(datadf),1,0)
+    if (distance_null == 1 &&
+        data_null == 1)
+      stop("The distance or datadf field must be filled in")
+    if (distance_null == 1)
+      distance <- as.matrix(dist(datadf, method = method))
 
-  if (distance_null == 1 && data_null == 1) stop("The distance or datadf field must be filled in")
-  if (distance_null == 1) distance <- as.matrix(dist(datadf, method=method))
-
-  type_distance <- ifelse ('dist' %in% class(datadf),1,0)
-  if (type_distance==1) distance <- as.matrix(distance)
-  nearest <- apply(distance,2,function(x) sort(x,ind=TRUE)$ix[2:(neighbSize+1)])
-  nr <- nrow(nearest);nc <- ncol(nearest)
-  same <- matrix(clusters,nrow=nr,ncol=nc,byrow=TRUE)!=matrix(clusters[nearest],nrow=nr,ncol=nc)
-  conn <- sum(same*matrix(1/1:neighbSize,nrow=nr,ncol=nc))
-  return(conn)
-}
+    type_distance <- ifelse ('dist' %in% class(datadf), 1, 0)
+    if (type_distance == 1)
+      distance <- as.matrix(distance)
+    nearest <-
+      apply(distance, 2, function(x)
+        sort(x, ind = TRUE)$ix[2:(neighbSize + 1)])
+    nr <- nrow(nearest)
+    nc <- ncol(nearest)
+    same <-
+      matrix(clusters,
+             nrow = nr,
+             ncol = nc,
+             byrow = TRUE) != matrix(clusters[nearest], nrow = nr, ncol = nc)
+    conn <- sum(same * matrix(1 / 1:neighbSize, nrow = nr, ncol = nc))
+    return(conn)
+  }

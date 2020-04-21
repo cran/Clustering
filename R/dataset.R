@@ -180,6 +180,8 @@ execute_datasets <- function (path,
                               metrics = CONST_NULL,
                               variables = CONST_NULL) {
 
+  on.exit(options(scipen = 999))
+
   formals(print.data.frame)$row.names <- FALSE
 
   if (is.null(algorithm)) {
@@ -441,8 +443,8 @@ execute_datasets <- function (path,
                 for (pos in 6:length(info)) {
                   option_format <- options(digits=4)
                   on.exit(options(option_format))
-                  result_info[pos] = round(x = as.numeric(result_info[pos]),
-                                           digits = 4)
+                  result_info[pos] = format(round(x = as.numeric(result_info[pos]),
+                                           digits = 4),scientific = FALSE)
                 }
 
                 df_result[rowCount, ] = result_info

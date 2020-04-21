@@ -177,18 +177,18 @@ external_validation = function(column_dataset_label,
   time_external = round(as.numeric(time),4)
 
   resultadoValores = list(
-    "entropy" = round(entropy, digits = 4),
-    "variation_information" = round(
+    "entropy" = format(round(entropy, digits = 4),scientific = FALSE),
+    "variation_information" = format(round(
       variation_information,
       digits = 4
-    ),
-    "precision" = round(precision, digits = 4),
-    "recall" = round(recall, digits = 4),
-    "f_measure" = round(f_measure, digits = 4),
-    "fowlkes_mallows_index" = round(
+    ),scientific = FALSE),
+    "precision" = format(round(precision, digits = 4),scientific = FALSE),
+    "recall" = format(round(recall, digits = 4),scientific = FALSE),
+    "f_measure" = format(round(f_measure, digits = 4),scientific = FALSE),
+    "fowlkes_mallows_index" = format(round(
       fowlkes_mallows_index,
       digits = 4
-    ),
+    ),scientific = FALSE),
     "time" = round(time_external, digits = 4)
   )
 
@@ -234,7 +234,7 @@ entropy_metric =
       unique(column_dataset_label)
     )))) * dividend_entropy
 
-    entropy = round(result_entropy, 4)
+    entropy = format(round(result_entropy, 4),scientific = FALSE)
 
     return (entropy)
 
@@ -378,10 +378,10 @@ fowlkes_mallows_index_metric =
            false_negative) {
     fowlkes_mallows_index = 0.0
 
-    fowlkes_mallows_index = round(sqrt((true_positive / ((true_positive + false_positive)
+    fowlkes_mallows_index = format(round(sqrt((true_positive / ((true_positive + false_positive)
     )) * (
       true_positive / (true_positive + false_negative)
-    )), 4)
+    )), 4),scientific = FALSE)
 
     return (fowlkes_mallows_index)
 
@@ -416,18 +416,18 @@ initializeExternalValidation = function() {
 
 
   resultadoValores = list(
-    "entropy" = round(entropy, digits = 4),
-    "variation_information" = round(
+    "entropy" = format(round(entropy, digits = 4),scientific = FALSE),
+    "variation_information" = format(round(
       variation_information,
       digits = 4
-    ),
-    "precision" = round(precision, digits = 4),
-    "recall" = round(recall, digits = 4),
-    "f_measure" = round(f_measure, digits = 4),
-    "fowlkes_mallows_index" = round(
+    ),scientific = FALSE),
+    "precision" = format(round(precision, digits = 4),scientific = FALSE),
+    "recall" = format(round(recall, digits = 4),scientific = FALSE),
+    "f_measure" = format(round(f_measure, digits = 4),scientific = FALSE),
+    "fowlkes_mallows_index" = format(round(
       fowlkes_mallows_index,
       digits = 4
-    ),
+    ),scientific = FALSE),
     "time" = round(as.numeric(time), digits = 4)
   )
 
