@@ -177,19 +177,19 @@ external_validation = function(column_dataset_label,
   time_external = round(as.numeric(time),4)
 
   resultadoValores = list(
-    "entropy" = format(round(entropy, digits = 4),scientific = FALSE),
+    "entropy" = format(round(as.numeric(entropy), digits = 4),scientific = FALSE),
     "variation_information" = format(round(
-      variation_information,
+      as.numeric(variation_information),
       digits = 4
     ),scientific = FALSE),
-    "precision" = format(round(precision, digits = 4),scientific = FALSE),
-    "recall" = format(round(recall, digits = 4),scientific = FALSE),
-    "f_measure" = format(round(f_measure, digits = 4),scientific = FALSE),
+    "precision" = format(round(as.numeric(precision), digits = 4),scientific = FALSE),
+    "recall" = format(round(as.numeric(recall), digits = 4),scientific = FALSE),
+    "f_measure" = format(round(as.numeric(f_measure), digits = 4),scientific = FALSE),
     "fowlkes_mallows_index" = format(round(
-      fowlkes_mallows_index,
+      as.numeric(fowlkes_mallows_index),
       digits = 4
     ),scientific = FALSE),
-    "time" = round(time_external, digits = 4)
+    "time" = round(as.numeric(time_external), digits = 4)
   )
 
   return (resultadoValores)
@@ -234,7 +234,7 @@ entropy_metric =
       unique(column_dataset_label)
     )))) * dividend_entropy
 
-    entropy = format(round(result_entropy, 4),scientific = FALSE)
+    entropy = round(as.numeric(result_entropy), 4)
 
     return (entropy)
 
@@ -378,10 +378,12 @@ fowlkes_mallows_index_metric =
            false_negative) {
     fowlkes_mallows_index = 0.0
 
-    fowlkes_mallows_index = format(round(sqrt((true_positive / ((true_positive + false_positive)
+    fowlkes_mallows_index = sqrt((true_positive / ((true_positive + false_positive)
     )) * (
       true_positive / (true_positive + false_negative)
-    )), 4),scientific = FALSE)
+    ))
+
+    if (is.na(fowlkes_mallows_index)) fowlkes_mallows_index = 0;
 
     return (fowlkes_mallows_index)
 
@@ -416,16 +418,16 @@ initializeExternalValidation = function() {
 
 
   resultadoValores = list(
-    "entropy" = format(round(entropy, digits = 4),scientific = FALSE),
+    "entropy" = format(round(as.numeric(entropy), digits = 4),scientific = FALSE),
     "variation_information" = format(round(
-      variation_information,
+      as.numeric(variation_information),
       digits = 4
     ),scientific = FALSE),
-    "precision" = format(round(precision, digits = 4),scientific = FALSE),
-    "recall" = format(round(recall, digits = 4),scientific = FALSE),
-    "f_measure" = format(round(f_measure, digits = 4),scientific = FALSE),
+    "precision" = format(round(as.numeric(precision), digits = 4),scientific = FALSE),
+    "recall" = format(round(as.numeric(recall), digits = 4),scientific = FALSE),
+    "f_measure" = format(round(as.numeric(f_measure), digits = 4),scientific = FALSE),
     "fowlkes_mallows_index" = format(round(
-      fowlkes_mallows_index,
+      as.numeric(fowlkes_mallows_index),
       digits = 4
     ),scientific = FALSE),
     "time" = round(as.numeric(time), digits = 4)

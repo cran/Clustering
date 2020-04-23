@@ -1,5 +1,5 @@
 Package: Clustering
-Version: 1.5
+Version: 1.6
 Date: 2020-04-10
 Title: Execution of Multiple Clustering Algorithm
 Author: Luis Alfonso Perez Martos [aut, cre]
@@ -18,5 +18,5 @@ Imports: apcluster, cluster, ClusterR, advclust, pvclust, gama, amap,
 Suggests: knitr, rmarkdown, kableExtra, tidyverse
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2020-04-21 20:36:48 UTC; luis
-Date/Publication: 2020-04-21 22:00:14 UTC
+Packaged: 2020-04-23 08:03:33 UTC; luis
+Date/Publication: 2020-04-23 16:10:32 UTC

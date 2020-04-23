@@ -254,6 +254,33 @@ execute_datasets <- function (path,
   df_external <- CONST_NULL
   df_internal <- CONST_NULL
 
+  if (is_metric_external) {
+    df_external <- data.frame(
+      matrix(
+        nrow = number_algorithms * length(measures_execute) * numberClusters * numberDataSets,
+        ncol = number_columnas_external(metrics_execute) + CONST_EXTERNAL_METRICS_DEFAULT
+      ),
+      row.names = CONST_NULL
+    )
+
+    colnames(df_external) <-
+      row_name_df_external(metrics_execute)
+
+  }
+
+  if (is_metric_internal) {
+    df_internal <- data.frame(
+      matrix(
+        nrow = number_algorithms * length(measures_execute) * numberClusters * numberDataSets,
+        ncol = number_columnas_internal(metrics_execute) + CONST_INTERNAL_METRICS_DEFAULT
+      ),
+      row.names = CONST_NULL
+    )
+
+    colnames(df_internal) <-
+      row_name_df_internal(metrics_execute)
+  }
+
   rowCount = CONST_ONE
 
   rowCountLatex  = CONST_ONE
@@ -262,7 +289,6 @@ execute_datasets <- function (path,
     changeAlgorithm = CONST_ZERO
 
     for (i in 1:length(algorithms_execute)) {
-      rowCountLatex  = CONST_ONE
 
       changeAlgorithm = CONST_ONE
 
@@ -277,33 +303,6 @@ execute_datasets <- function (path,
         if (strcmp(name_measure, algorithms_execute[i])) {
           countMeasureAlgorithm = countMeasureAlgorithm + CONST_ONE
         }
-      }
-
-      if (is_metric_external) {
-        df_external <- data.frame(
-          matrix(
-            nrow = countMeasureAlgorithm * numberClusters * numberDataSets,
-            ncol = number_columnas_external(metrics_execute) + CONST_EXTERNAL_METRICS_DEFAULT
-          ),
-          row.names = CONST_NULL
-        )
-
-        colnames(df_external) <-
-          row_name_df_external(metrics_execute)
-
-      }
-
-      if (is_metric_internal) {
-        df_internal <- data.frame(
-          matrix(
-            nrow = countMeasureAlgorithm * numberClusters * numberDataSets,
-            ncol = number_columnas_internal(metrics_execute) + CONST_INTERNAL_METRICS_DEFAULT
-          ),
-          row.names = CONST_NULL
-        )
-
-        colnames(df_internal) <-
-          row_name_df_internal(metrics_execute)
       }
 
       changeMeasure = CONST_ZERO
@@ -475,18 +474,19 @@ execute_datasets <- function (path,
           }
         }
       }
-
-
-      if (is_metric_external) {
-        tableExternal <-
-          xtable(xtable(df_external), include.rownames = FALSE)
-      }
-
-      if (is_metric_internal) {
-        tableInternal <-
-          xtable(xtable(df_internal), include.rownames = FALSE)
-      }
     }
+  }
+
+  rowCountLatex = rowCountLatex - CONST_ONE
+
+  if (is_metric_external) {
+    tableExternal <-
+      xtable(xtable(df_external[1:rowCountLatex,]), include.rownames = FALSE)
+  }
+
+  if (is_metric_internal) {
+    tableInternal <-
+      xtable(xtable(df_internal[1:rowCountLatex,]), include.rownames = FALSE)
   }
 
   rowCount  = rowCount - CONST_ONE

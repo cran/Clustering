@@ -1,4 +1,4 @@
-9eac18e6a53320f01f84b9e8f331281d *DESCRIPTION
+a3d6702394d469242a4b32da476f2560 *DESCRIPTION
 550310a4efe0380d3c920274c30a7e9b *NAMESPACE
 2ac99f79c9115f72a2c5e787de4019b1 *R/aggExCluster.R
 908ac78da85fb4da39770dafbe90370e *R/agnes.R
@@ -9,10 +9,10 @@
 5bd933ea024a78f66695dbb700252e8e *R/clara.R
 3183a3b8a9ad220ac70e38a0d48a1569 *R/constants.R
 71307a50e50b692c84cf40e1008ba5d4 *R/daisy.R
-8965a4d0e2276f0ee3db57844a5642fd *R/dataset.R
+aa70f09ecb199127711cf420a7170ca9 *R/dataset.R
 74328859cecf4741d48dbaed268e7a61 *R/diana.R
 19bcd2deea60f2d9ee21b667eae30ce2 *R/evaluate_column_dataset.R
-5fef9240a3d965eb65d13168d7279a13 *R/external_validation.R
+90a8d73d46da42f1319407efe3a1ae1d *R/external_validation.R
 d076e1506ca4336e741cc2e0adaa685b *R/fanny.R
 e075b7f2c53c49d8a7d68c1bfbc0af74 *R/fuzzy.R
 e2775ed3c81514900647f3bec3dfd0c6 *R/gama.R
@@ -37,7 +37,7 @@ af41273d126ada29d5bd03099ff09a93 *data/stulong.RData
 d36ff859dec75f97154a532511bf5236 *data/weather.RData
 39e182d2c62ab3c6f51fd637b561267e *inst/doc/Clustering.R
 052bb2fbe152a9856152f34df651a45a *inst/doc/Clustering.Rmd
-1abd6f996abe4f0cc7c2ec577538729d *inst/doc/Clustering.html
+130c6393a71ea4373407f4522057e1e8 *inst/doc/Clustering.html
 f619054d2c5c51ac017778773f716098 *man/aggExCluster_euclidean.Rd
 c0ba70210e66eb2e1e23f560cdecc92c *man/agnes_euclidean_method.Rd
 fd31288114a81980c78d4520b0ce0ebb *man/agnes_manhattan_method.Rd
