@@ -1,21 +1,21 @@
-#' Method that runs the KMeans_rcpp algorithm using the Euclidean metric to make an external or internal validation of the cluster
+#' Method that runs the KMeans_rcpp algorithm using the Euclidean metric to make an external or internal validation of the cluster.
 #'
-#' @param data matrix or data frame
-#' @param clusters number of clusters
-#' @param columnClass number of column, for example if a dataset has five column,
-#' we can select column four to calculate alidation
-#' @param metric metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
+#' @param dt matrix or data frame with the set of values to be applied to the algorithm.
+#' @param clusters is an integer that indexes the number of clusters we want to create.
+#' @param columnClass is an integer with the number of columns, for example if a dataset has five column,
+#' we can select column four to calculate alidation.
+#' @param metric is a characters vector with the metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the grouping
+#' @return returns a list with both the internal and external evaluation of the grouping.
 #'
 #' @keywords internal
 #'
 
-kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
+kmeans_rcpp_method = function(dt, clusters, columnClass, metric) {
   start.time <- Sys.time()
 
-  if ('data.frame' %in% class(data))
-    data = as.matrix(data)
+  if ('data.frame' %in% class(dt))
+    dt = as.matrix(dt)
 
   numeric_cluster <- ifelse(!is.numeric(clusters), 1, 0)
 
@@ -23,7 +23,7 @@ kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
     stop('The field clusters must be a numeric')
 
   kmeans_rcpp <- tryCatch({
-    KMeans_rcpp(data = data, clusters = clusters)
+    KMeans_rcpp(data = dt, clusters = clusters)
   },
 
   error = function(cond) {
@@ -34,7 +34,7 @@ kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
     ev_kmeans_rcpp <-
       tryCatch({
         external_validation(
-          column_dataset_label = c(data[, columnClass]),
+          column_dataset_label = c(dt[, columnClass]),
           clusters_vector = kmeans_rcpp$clusters,
           metric
         )
@@ -48,7 +48,7 @@ kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
       internal_validation(
         distance = CONST_NULL,
         clusters_vector = kmeans_rcpp$clusters,
-        data = data,
+        dataf = dt,
         method = CONST_EUCLIDEAN,
         metric
       )
@@ -80,7 +80,7 @@ kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
 #'
 #' @param data matrix or data frame
 #' @param clusters number of clusters
-#' @param columnClass number of column, for example if a dataset has five column,
+#' @param columnClass is an integer with the number of columns, for example if a dataset has five column,
 #' we can select column four to calculate alidation
 #' @param metric metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
@@ -90,11 +90,11 @@ kmeans_rcpp_method = function(data, clusters, columnClass, metric) {
 #'
 
 
-kmeans_arma_method = function(data, clusters, columnClass, metric) {
+kmeans_arma_method = function(dt, clusters, columnClass, metric) {
   start.time <- Sys.time()
 
-  if ('data.frame' %in% class(data))
-    data = as.matrix(data)
+  if ('data.frame' %in% class(dt))
+    dt = as.matrix(dt)
 
   numeric_cluster <- ifelse(!is.numeric(clusters), 1, 0)
 
@@ -102,7 +102,7 @@ kmeans_arma_method = function(data, clusters, columnClass, metric) {
     stop('The field clusters must be a numeric')
 
   kmeans_arma <- tryCatch({
-    KMeans_arma(data = data, clusters = clusters)
+    KMeans_arma(data = dt, clusters = clusters)
   },
 
   error = function(cond) {
@@ -111,7 +111,7 @@ kmeans_arma_method = function(data, clusters, columnClass, metric) {
 
   if (!is.null(kmeans_arma)) {
     pr_kmeans_arma <- tryCatch({
-      predict_KMeans(data = data, CENTROIDS = kmeans_arma)
+      predict_KMeans(data = dt, CENTROIDS = kmeans_arma)
     },
 
     error = function(cond) {
@@ -122,7 +122,7 @@ kmeans_arma_method = function(data, clusters, columnClass, metric) {
       ev_kmeans_arma <-
         tryCatch({
           external_validation(
-            column_dataset_label = c(data[, columnClass]),
+            column_dataset_label = c(dt[, columnClass]),
             clusters_vector = as.vector(pr_kmeans_arma, metric)
           )
         },
@@ -135,7 +135,7 @@ kmeans_arma_method = function(data, clusters, columnClass, metric) {
         internal_validation(
           distance = CONST_NULL,
           clusters_vector = as.vector(pr_kmeans_arma),
-          data = data,
+          dataf = dt,
           method = CONST_EUCLIDEAN,
           metric
         )
@@ -174,7 +174,7 @@ kmeans_arma_method = function(data, clusters, columnClass, metric) {
 #'
 #' @param data matrix or data frame
 #' @param clusters number of clusters
-#' @param columnClass number of column, for example if a dataset has five column,
+#' @param columnClass is an integer with the number of columns, for example if a dataset has five column,
 #' we can select column four to calculate alidation
 #' @param metric metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
@@ -183,11 +183,11 @@ kmeans_arma_method = function(data, clusters, columnClass, metric) {
 #' @keywords internal
 #'
 
-mini_kmeans_method = function(data, clusters, columnClass, metric) {
+mini_kmeans_method = function(dt, clusters, columnClass, metric) {
   start.time <- Sys.time()
 
-  if ('data.frame' %in% class(data))
-    data = as.matrix(data)
+  if ('data.frame' %in% class(dt))
+    dt = as.matrix(dt)
 
   numeric_cluster <- ifelse(!is.numeric(clusters), 1, 0)
 
@@ -195,7 +195,7 @@ mini_kmeans_method = function(data, clusters, columnClass, metric) {
     stop('The field clusters must be a numeric')
 
   mini_kmeans <- tryCatch({
-    MiniBatchKmeans(data = data, clusters = clusters)
+    MiniBatchKmeans(data = dt, clusters = clusters)
   },
 
   error = function(cond) {
@@ -205,7 +205,7 @@ mini_kmeans_method = function(data, clusters, columnClass, metric) {
   if (!is.null(mini_kmeans)) {
     pr_mini_kmeans <-
       tryCatch({
-        predict_MBatchKMeans(data = data, CENTROIDS = mini_kmeans$centroids)
+        predict_MBatchKMeans(data = dt, CENTROIDS = mini_kmeans$centroids)
 
       },
 
@@ -217,7 +217,7 @@ mini_kmeans_method = function(data, clusters, columnClass, metric) {
       ev_mini_kmeans <-
         tryCatch({
           external_validation(
-            column_dataset_label = c(data[, columnClass]),
+            column_dataset_label = c(dt[, columnClass]),
             clusters_vector = as.vector(pr_mini_kmeans, metric)
           )
         },
@@ -230,7 +230,7 @@ mini_kmeans_method = function(data, clusters, columnClass, metric) {
         internal_validation(
           distance = CONST_NULL,
           clusters_vector = as.vector(pr_mini_kmeans),
-          data = data,
+          dataf = dt,
           method = CONST_EUCLIDEAN,
           metric
         )

@@ -25,11 +25,11 @@ specify_decimal <-
 #'
 
 path_dataset = function (directory) {
-
-
   on.exit(setwd(directory))
 
-  files <- list.files(path = directory, pattern = "\\.dat")
+  files <-
+    list.files(path = directory,
+               pattern = c("\\.dat|\\.arff|\\.csv"))
 
   if (!is.null(files) && length(files) > 0)
     return (files)
@@ -51,12 +51,12 @@ path_dataset = function (directory) {
 
 fill_cluster_vector = function(data, appcluster) {
   cluster_vector = array(dim = nrow(data))
-  for (i in 1:length(appcluster@clusters)) {
-    for (j in 1:length(appcluster@clusters[[i]])) {
-      array_cluster = appcluster@clusters[[i]]
-      pos = array_cluster[j]
+  for (iterator_row in 1:length(appcluster@clusters)) {
+    for (iterator_col in 1:length(appcluster@clusters[[iterator_row]])) {
+      array_cluster = appcluster@clusters[[iterator_row]]
+      pos = array_cluster[iterator_col]
 
-      cluster_vector[[pos]] = i
+      cluster_vector[[pos]] = iterator_row
 
     }
   }
@@ -76,19 +76,19 @@ fill_cluster_vector = function(data, appcluster) {
 
 detect_definition_attribute = function(path) {
   con = file(path, "r")
-  numeroFilas = 1
-  while (TRUE) {
+  number_rows = 1
+  while (T) {
     line = readLines(con, n = 1)
     if (!grepl("@", line)) {
       break
 
     }
-    numeroFilas = numeroFilas + 1
+    number_rows = number_rows + 1
   }
 
   close(con)
 
-  return (numeroFilas - 1)
+  return (number_rows - 1)
 }
 
 #'
@@ -101,29 +101,136 @@ detect_definition_attribute = function(path) {
 #'@keywords internal
 #'
 
-number_variables_dataset <- function(path){
-
+number_variables_dataset <- function(path) {
   files <- path_dataset(path)
 
   number_variables <- 0
 
-  if (!is.null(files)){
-
+  if (!is.null(files)) {
     for (pos in 1:length(files)) {
-
-      df <- as.matrix(
-        read.csv(
-          file = files[pos],
-          header = CONST_FALSE,
-          comment.char = '@'
+      if (extension_file(files[pos]) == CONST_FORMAT_ARFF_FILE) {
+        df <- read_arff(files[pos])
+      } else {
+        df <- as.matrix(
+          read.csv(
+            file = files[pos],
+            header = CONST_FALSE,
+            comment.char = '@',
+            stringsAsFactors = F,
+            encoding = "UTF-8"
+          )
         )
-      )
-
-      number_variables <- number_variables + ncol(df);
+      }
+      number_variables <- number_variables + ncol(df)
     }
-
   }
 
   return (number_variables)
 
+}
+
+#'
+#'Method that return the extension of a file
+#'
+#'@param path dataset directory
+#'
+#'@return return the extension of file
+#'
+#'@keywords internal
+#'
+
+extension_file <- function(path) {
+  return (file_ext(path))
+}
+
+#'
+#'Method that converts a dataset into a matrix
+#'
+#'@param path dataset directory
+#'
+#'@return returns a matrix whose content is the dataset received as a parameter
+#'
+#'@keywords internal
+#'
+
+read_file <- function(path) {
+  result <- CONST_NULL
+
+  if (extension_file(path) == CONST_FORMAT_ARFF_FILE) {
+    result <- read_arff(path)
+  } else {
+    result <- as.matrix(read.csv(
+      file = path,
+      header = CONST_FALSE,
+      comment.char = '@',
+      stringsAsFactors = F,
+      encoding = "UTF-8",
+      strip.white = T
+    ))
+  }
+
+  return (result)
+}
+
+dataframe_by_metrics_evaluation <- function(data, external = T) {
+
+  columns <- colnames(data)
+  index <- 2
+  cols_remove <- NULL
+
+  if (external){
+    cols_remove <- c('timeInternal')
+  } else cols_remove <- c('timeExternal')
+
+  for (number_col in 6:length(columns)){
+
+    if (external){
+      if (is_Internal_Metrics(columns[number_col])){
+        cols_remove[index]= columns[number_col]
+        index <- index+1
+      }
+    } else {
+      if (is_External_Metrics(columns[number_col])){
+        cols_remove[index]= columns[number_col]
+        index <- index+1
+      }
+    }
+  }
+
+  return (select(data, -cols_remove))
+
+}
+
+#'
+#'Method that converts a matrix into numerical format
+#'
+#'@param datas information matrix
+#'
+#'@return return a matrix in numeric format
+#'
+#'@keywords internal
+#'
+
+convert_numeric_matrix <- function(datas){
+
+  ncol(datas)
+
+  for (iterator in 1:ncol(datas)){
+
+    if (class(datas[,iterator])=="character"){
+
+      character_numeric <- ifelse(!is.na(as.numeric(datas[,iterator])), 1, 0)
+
+      if(character_numeric > 0){
+        datas[,iterator] = as.numeric(datas[,iterator])
+      } else {
+        datas[,iterator]=as.numeric(as.factor(datas[,iterator]))
+      }
+
+    } else {
+      datas[,iterator] = as.numeric(datas[,iterator])
+    }
+  }
+
+  return (datas)
 }

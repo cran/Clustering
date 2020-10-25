@@ -17,18 +17,37 @@ row_name_df_internal = function(metrics) {
   result = c(result, CONST_RANKING)
   result = c(result, CONST_TIME_INTERNAL)
 
-  for (i in 1:length(metrics)) {
-    if (tolower(metrics[i]) == CONST_CONNECTIVITY_METRIC) {
+  for (iterate in 1:length(metrics)) {
+    if (tolower(metrics[iterate]) == CONST_CONNECTIVITY_METRIC) {
       result = c(result, CONST_CONNECTIVITY_METRIC)
     }
 
-    if (tolower(metrics[i]) == CONST_DUNN_METRIC) {
+    if (tolower(metrics[iterate]) == CONST_DUNN_METRIC) {
       result = c(result, CONST_DUNN_METRIC)
     }
 
-    if (tolower(metrics[i]) == CONST_SILHOUETTE_METRIC) {
+    if (tolower(metrics[iterate]) == CONST_SILHOUETTE_METRIC) {
       result = c(result, CONST_SILHOUETTE_METRIC)
     }
+
+    #Variables
+
+    if (tolower(metrics[iterate]) == tolower(CONST_TIME_INTERNAL_VAR)) {
+      result = c(result, CONST_TIME_INTERNAL_VAR)
+    }
+
+    if (tolower(metrics[iterate]) == tolower(CONST_CONNECTIVITY_METRIC_VAR)) {
+      result = c(result, CONST_CONNECTIVITY_METRIC_VAR)
+    }
+
+    if (tolower(metrics[iterate]) == tolower(CONST_DUNN_METRIC_VAR)) {
+      result = c(result, CONST_DUNN_METRIC_VAR)
+    }
+
+    if (tolower(metrics[iterate]) == tolower(CONST_SILHOUETTE_METRIC_VAR)) {
+      result = c(result, CONST_SILHOUETTE_METRIC_VAR)
+    }
+
   }
 
   return (result)
@@ -39,7 +58,7 @@ row_name_df_internal = function(metrics) {
 #'
 #' @param distance dissimilarity matrix
 #' @param clusters_vector array that containe tha data grouped in cluster
-#' @param data dataframe with original data
+#' @param dataf dataframe with original data
 #' @param method indicates the method for calculating distance between points
 #' @param metric array with external metric types
 #'
@@ -50,7 +69,7 @@ row_name_df_internal = function(metrics) {
 
 internal_validation = function(distance = NULL,
                                clusters_vector,
-                               data = NULL,
+                               dataf = NULL,
                                method = CONST_EUCLIDEAN,
                                metric = NULL) {
   start.time = Sys.time()
@@ -67,13 +86,13 @@ internal_validation = function(distance = NULL,
     method = ""
   } else {
     distance = distance_matrix(
-      data =  data,
+      data =  dataf,
       method = method,
-      upper = TRUE,
-      diagonal = TRUE
+      upper = T,
+      diagonal = T
     )
     method = ""
-    data = NULL
+    dataf = NULL
 
   }
 
@@ -81,22 +100,22 @@ internal_validation = function(distance = NULL,
 
   if (sum(metrics_nula) == 0) {
     connectivity =
-      connectivity_metric (distance, clusters_vector, data, method)
+      connectivity_metric (distance, clusters_vector, dataf, method)
 
-    dunn = dunn_metric (distance, clusters_vector, data, method)
+    dunn = dunn_metric (distance, clusters_vector, dataf, method)
 
     silhouette = silhouette_metric (clusters_vector, distance)
 
   } else {
     for (me in metric) {
       if (me == CONST_DUNN_METRIC) {
-        dunn = dunn_metric (distance, clusters_vector, data, method)
+        dunn = dunn_metric (distance, clusters_vector, dataf, method)
       }
       if (me == CONST_SILHOUETTE_METRIC)
         silhouette = silhouette_metric (clusters_vector, distance)
       if (me == CONST_CONNECTIVITY_METRIC)
         connectivity =
-          connectivity_metric (distance, clusters_vector, data, method)
+          connectivity_metric (distance, clusters_vector, dataf, method)
     }
 
   }
@@ -107,14 +126,22 @@ internal_validation = function(distance = NULL,
 
   time_internal = round(as.numeric(time), 4)
 
+  if (is.infinite(as.numeric(dunn))) dunn <- 0
+  if (is.na(as.numeric(dunn))) dunn <- 0
+
+  if (is.infinite(as.numeric(connectivity))) connectivity <- 0
+  if (is.na(as.numeric(connectivity))) connectivity <- 0
+
+  if (is.infinite(as.numeric(silhouette))) silhouette <- 0
+  if (is.na(as.numeric(silhouette))) silhouette <- 0
 
   result = list(
-    "connectivity" = format(round(as.numeric(connectivity), digits = 4),scientific = FALSE),
-    "dunn" = format(round(as.numeric(dunn), digits = 4),scientific = FALSE),
+    "connectivity" = format(round(as.numeric(connectivity), digits = 4),scientific = F),
+    "dunn" = format(round(as.numeric(dunn), digits = 4),scientific = F),
     "silhouette" = format(round(
       as.numeric(silhouette),
       digits = 4),
-      scientific = FALSE
+      scientific = F
     ),
     "time" = round(time_internal, digits = 4)
   )
@@ -128,7 +155,7 @@ internal_validation = function(distance = NULL,
 #'
 #' @param distance dissimilarity matrix
 #' @param clusters_vector array that containe tha data grouped in cluster
-#' @param data dataframe with original data
+#' @param dt dataframe with original data
 #' @param method indicates the method for calculating distance between points
 #'
 #' @return returns a double with the result of the connectivity calculation
@@ -137,14 +164,14 @@ internal_validation = function(distance = NULL,
 #'
 
 connectivity_metric =
-  function(distance, clusters_vector, data, method) {
+  function(distance, clusters_vector, dt, method) {
     connectivity = 0.0
 
     connectivity = tryCatch({
       calculate_connectivity(
         distance = distance,
         clusters = clusters_vector,
-        datadf = data,
+        datadf = dt,
         method = method
       )
     },
@@ -161,7 +188,7 @@ connectivity_metric =
 #'
 #' @param distance dissimilarity matrix
 #' @param clusters_vector array that containe tha data grouped in cluster
-#' @param data dataframe with original data
+#' @param dt dataframe with original data
 #' @param method indicates the method for calculating distance between points
 #'
 #' @return returns a double with the result of the dunn calculation
@@ -169,11 +196,11 @@ connectivity_metric =
 #' @keywords internal
 #'
 
-dunn_metric = function(dist, clusters_vector, data, me) {
+dunn_metric = function(dist, clusters_vector, dt, me) {
   dunn = 0.0
 
   dunn = tryCatch({
-    calculate_dunn(dist, clusters_vector, data, me)
+    calculate_dunn(dist, clusters_vector, dt, me)
   },
 
   error = function(cond) {
@@ -231,9 +258,9 @@ initializeInternalValidation = function() {
 
 
   result = list(
-    "connectivity" = format(round(as.numeric(connectivity), digits = 4), scientific = FALSE),
-    "dunn" = format(round(as.numeric(dunn), digits = 4), scientific = FALSE),
-    "silhouette" = format(round(as.numeric(silhouette), digits = 4), scientific = FALSE),
+    "connectivity" = format(round(as.numeric(connectivity), digits = 4), scientific = F),
+    "dunn" = format(round(as.numeric(dunn), digits = 4), scientific = F),
+    "silhouette" = format(round(as.numeric(silhouette), digits = 4), scientific = F),
     "time" = round(as.numeric(time), digits = 4)
   )
 
@@ -245,7 +272,7 @@ initializeInternalValidation = function() {
 #'
 #' @param distance dissimilarity matrix
 #' @param clusters array that containe tha data grouped in cluster
-#' @param data dataframe with original data
+#' @param datadf dataframe with original data
 #' @param method indicates the method for calculating distance between points
 #'
 #' @return returns a double with the result of the dunn calculation
@@ -286,7 +313,7 @@ calculate_dunn <-
         }
       }
     }
-    dunn <- min(interClust, na.rm = TRUE) / max(intraClust)
+    dunn <- min(interClust, na.rm = T) / max(intraClust)
     return(dunn)
   }
 
@@ -295,7 +322,7 @@ calculate_dunn <-
 #'
 #' @param distance dissimilarity matrix
 #' @param clusters array that containe tha data grouped in cluster
-#' @param data dataframe with original data
+#' @param datdf dataframe with original data
 #' @param neighbSize number of neighbours
 #' @param method indicates the method for calculating distance between points. Default is euclidean
 #'
@@ -324,14 +351,14 @@ calculate_connectivity <-
       distance <- as.matrix(distance)
     nearest <-
       apply(distance, 2, function(x)
-        sort(x, ind = TRUE)$ix[2:(neighbSize + 1)])
+        sort(x, ind = T)$ix[2:(neighbSize + 1)])
     nr <- nrow(nearest)
     nc <- ncol(nearest)
     same <-
       matrix(clusters,
              nrow = nr,
              ncol = nc,
-             byrow = TRUE) != matrix(clusters[nearest], nrow = nr, ncol = nc)
+             byrow = T) != matrix(clusters[nearest], nrow = nr, ncol = nc)
     conn <- sum(same * matrix(1 / 1:neighbSize, nrow = nr, ncol = nc))
     return(conn)
   }

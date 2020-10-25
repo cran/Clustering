@@ -63,25 +63,47 @@
 
   CONST_PRECISION_METRIC <- "precision"
 
+  CONST_PRECISION_METRIC_VAR <- "precisionVar"
+
   CONST_RECALL_METRIC <- "recall"
+
+  CONST_RECALL_METRIC_VAR <- "recallVar"
 
   CONST_ENTROPY_METRIC <- "entropy"
 
+  CONST_ENTROPY_METRIC_VAR <- "entropyVar"
+
   CONST_VARIATION_INFORMATION_METRIC <- "variation_information"
+
+  CONST_VARIATION_INFORMATION_METRIC_VAR <- "variation_informationVar"
 
   CONST_F_MEASURE_METRIC <- "f_measure"
 
+  CONST_F_MEASURE_METRIC_VAR <- "f_measureVar"
+
   CONST_FOWLKES_MALLOWS_INDEX_METRIC <- "fowlkes_mallows_index"
+
+  CONST_FOWLKES_MALLOWS_INDEX_METRIC_VAR <- "fowlkes_mallows_indexVar"
 
   CONST_DUNN_METRIC <- "dunn"
 
+  CONST_DUNN_METRIC_VAR <- "dunnVar"
+
   CONST_SILHOUETTE_METRIC <- "silhouette"
+
+  CONST_SILHOUETTE_METRIC_VAR <- "silhouetteVar"
 
   CONST_CONNECTIVITY_METRIC <- "connectivity"
 
+  CONST_CONNECTIVITY_METRIC_VAR <- "connectivityVar"
+
   CONST_TIME_EXTERNAL <- "timeExternal"
 
+  CONST_TIME_EXTERNAL_VAR <- "timeExternalVar"
+
   CONST_TIME_INTERNAL <- "timeInternal"
+
+  CONST_TIME_INTERNAL_VAR <- "timeInternalVar"
 
   CONST_EUCLIDEAN <- "euclidean"
 
@@ -167,9 +189,9 @@
 
   CONST_NULL <- NULL
 
-  CONST_FALSE <- FALSE
+  CONST_FALSE <- F
 
-  CONST_TRUE <- TRUE
+  CONST_TRUE <- T
 
   CONST_ZERO_DOUBLE <- 0.0
 
@@ -186,3 +208,9 @@
   CONST_CENTROID <- "centroid"
 
   CONST_SINGLE <- "single"
+
+  CONST_FORMAT_ARFF_FILE <- "arff"
+
+  CONST_NAME_EXTERNAL_FILA_LATEX = "external_data.tex"
+
+  CONST_NAME_INTERNAL_FILA_LATEX = "internal_data.tex"

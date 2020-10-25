@@ -1,22 +1,22 @@
-#' Method that runs the GMM algorithm using the Euclidean metric to make an external or internal validation of the cluster
+#' Method that runs the GMM algorithm using the Euclidean metric to make an external or internal validation of the cluster.
 #'
-#' @param data matrix or data frame
-#' @param clusters number of clusters
-#' @param columnClass number of column, for example if a dataset has five column,
-#' we can select column four to calculate alidation
-#' @param metric metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
+#' @param dt matrix or data frame with the set of values to be applied to the algorithm.
+#' @param clusters is an integer that indexes the number of clusters we want to create.
+#' @param columnClass is an integer with the number of columns, for example if a dataset has five column,
+#' we can select column four to calculate alidation.
+#' @param metric is a characters vector with the metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the grouping
+#' @return returns a list with both the internal and external evaluation of the grouping.
 #'
 #' @keywords internal
 #'
 
-gmm_euclidean_method = function(data, clusters, columnClass, metric) {
+gmm_euclidean_method = function(dt, clusters, columnClass, metric) {
 
   start.time <- Sys.time()
 
-  if ('data.frame' %in% class(data))
-    data = as.matrix(data)
+  if ('data.frame' %in% class(dt))
+    dt = as.matrix(dt)
 
   numeric_cluster <- ifelse(!is.numeric(clusters),1,0)
 
@@ -25,7 +25,7 @@ gmm_euclidean_method = function(data, clusters, columnClass, metric) {
 
   gmm_euclidean <- tryCatch({
     GMM(
-      data = data,
+      data = dt,
       km_iter = 10,
       dist_mode = CONST_EUCLIDEAN_DIST,
       seed_mode = CONST_RANDOM_SUBSET,
@@ -41,7 +41,7 @@ gmm_euclidean_method = function(data, clusters, columnClass, metric) {
   if (!is.null(gmm_euclidean)) {
     pr_gmm_euclidean <- tryCatch({
       predict_GMM(
-        data,
+        dt,
         gmm_euclidean$centroids,
         gmm_euclidean$covariance_matrices,
         gmm_euclidean$weights
@@ -56,7 +56,7 @@ gmm_euclidean_method = function(data, clusters, columnClass, metric) {
       ev_gmm_euclidean <-
         tryCatch({
           external_validation(
-            column_dataset_label = c(data[, columnClass]),
+            column_dataset_label = c(dt[, columnClass]),
             clusters_vector = pr_gmm_euclidean$cluster_labels + 1,metric
           )
         },
@@ -69,7 +69,7 @@ gmm_euclidean_method = function(data, clusters, columnClass, metric) {
         internal_validation(
           distance = CONST_NULL,
           clusters_vector = pr_gmm_euclidean$cluster_labels + 1,
-          data = data,
+          dataf = dt,
           method = CONST_EUCLIDEAN,
           metric
         )
@@ -104,25 +104,25 @@ gmm_euclidean_method = function(data, clusters, columnClass, metric) {
 
 }
 
-#' Method that runs the GMM algorithm using the Manhattan metric to make an external or internal validation of the cluster
+#' Method that runs the GMM algorithm using the Manhattan metric to make an external or internal validation of the cluster.
 #'
-#' @param data matrix or data frame
-#' @param clusters number of clusters
-#' @param columnClass number of column, for example if a dataset has five column,
-#' we can select column four to calculate alidation
-#' @param metric metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
+#' @param dt matrix or data frame with the set of values to be applied to the algorithm.
+#' @param clusters is an integer that indexes the number of clusters we want to create.
+#' @param columnClass is an integer with the number of columns, for example if a dataset has five column,
+#' we can select column four to calculate alidation.
+#' @param metric is a characters vector with the metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the grouping
+#' @return returns a list with both the internal and external evaluation of the grouping.
 #'
 #' @keywords internal
 #'
 
-gmm_manhattan_method = function(data, clusters, columnClass, metric) {
+gmm_manhattan_method = function(dt, clusters, columnClass, metric) {
 
   start.time <- Sys.time()
 
-  if ('data.frame' %in% class(data))
-    data = as.matrix(data)
+  if ('data.frame' %in% class(dt))
+    dt = as.matrix(dt)
 
   numeric_cluster <- ifelse(!is.numeric(clusters),1,0)
 
@@ -132,7 +132,7 @@ gmm_manhattan_method = function(data, clusters, columnClass, metric) {
 
   gmm_manhattan <- tryCatch({
     GMM(
-      data = data,
+      data = dt,
       km_iter = 10,
       dist_mode = CONST_MANHATTAN_DIST,
       seed_mode = CONST_RANDOM_SUBSET,
@@ -147,7 +147,7 @@ gmm_manhattan_method = function(data, clusters, columnClass, metric) {
   if (!is.null(gmm_manhattan)) {
     pr_gmm_manhattan <- tryCatch({
       predict_GMM(
-        data,
+        dt,
         gmm_manhattan$centroids,
         gmm_manhattan$covariance_matrices,
         gmm_manhattan$weights
@@ -163,7 +163,7 @@ gmm_manhattan_method = function(data, clusters, columnClass, metric) {
       ev_gmm_manhattan <-
         tryCatch({
           external_validation(
-            column_dataset_label = c(data[, columnClass]),
+            column_dataset_label = c(dt[, columnClass]),
             clusters_vector = pr_gmm_manhattan$cluster_labels + 1,metric
           )
         },
@@ -177,7 +177,7 @@ gmm_manhattan_method = function(data, clusters, columnClass, metric) {
         internal_validation(
           distance = CONST_NULL,
           clusters_vector = pr_gmm_manhattan$cluster_labels + 1,
-          data = data,
+          dataf = dt,
           method = CONST_MANHATTAN,
           metric
         )

@@ -1,21 +1,21 @@
-#' Method that runs the apclusterK algorithm using the euclidean metric to make an external or internal validation of the cluster
+#' Method that runs the apclusterK algorithm using the euclidean metric to make an external or internal validation of the cluster.
 #'
-#' @param data matrix or data frame
-#' @param clusters number of clusters
-#' @param columnClass number of column, for example if a dataset has five column,
-#' we can select column four to calculate alidation
-#' @param metric metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
+#' @param dt matrix or data frame with the set of values to be applied to the algorithm.
+#' @param clusters is an integer that indexes the number of clusters we want to create.
+#' @param columnClass is an integer with the number of columns, for example if a dataset has five column,
+#' we can select column four to calculate alidation.
+#' @param metric is a characters vector with the metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the grouping
+#' @return returns a list with both the internal and external evaluation of the grouping.
 #'
 #' @keywords internal
 #'
 
-apclusterK_euclidean = function(data, clusters, columnClass, metric) {
+apclusterK_euclidean = function(dt, clusters, columnClass, metric) {
   start.time <- Sys.time()
 
-  if ('data.frame' %in% class(data))
-    data = as.matrix(data)
+  if ('data.frame' %in% class(dt))
+    dt = as.matrix(dt)
 
   numeric_cluster <- ifelse(!is.numeric(clusters),1,0)
 
@@ -24,7 +24,7 @@ apclusterK_euclidean = function(data, clusters, columnClass, metric) {
 
   appcluster_euclidean <- tryCatch({
     apclusterK(negDistMat(r = CONST_TWO, method = CONST_EUCLIDEAN),
-                          x = data,
+                          x = dt,
                           K = clusters)
   },
 
@@ -34,11 +34,11 @@ apclusterK_euclidean = function(data, clusters, columnClass, metric) {
 
   if (!is.null(appcluster_euclidean)) {
 
-    cluster_appcluster_euclidean = fill_cluster_vector(data, appcluster_euclidean)
+    cluster_appcluster_euclidean = fill_cluster_vector(dt, appcluster_euclidean)
 
     ev_apcluster_eu <-
       tryCatch({
-        external_validation(c(data[, columnClass]),
+        external_validation(c(dt[, columnClass]),
                             cluster_appcluster_euclidean,metric)
 
       },
@@ -51,7 +51,7 @@ apclusterK_euclidean = function(data, clusters, columnClass, metric) {
       internal_validation(
         distance = CONST_NULL,
         clusters_vector = cluster_appcluster_euclidean,
-        data = data,
+        dataf = dt,
         method = CONST_EUCLIDEAN,
         metric
       )
@@ -80,24 +80,24 @@ apclusterK_euclidean = function(data, clusters, columnClass, metric) {
   return (result)
 }
 
-#' Method that runs the apclusterK algorithm using the manhattan metric to make an external or internal validation of the cluster
+#' Method that runs the apclusterK algorithm using the manhattan metric to make an external or internal validation of the cluster.
 #'
-#' @param data matrix or data frame
-#' @param clusters number of clusters
-#' @param columnClass number of column, for example if a dataset has five column,
-#' we can select column four to calculate alidation
-#' @param metric metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
+#' @param dt matrix or data frame with the set of values to be applied to the algorithm.
+#' @param clusters is an integer that indexes the number of clusters we want to create.
+#' @param columnClass is an integer with the number of columns, for example if a dataset has five column,
+#' we can select column four to calculate alidation.
+#' @param metric is a characters vector with the metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the grouping
+#' @return returns a list with both the internal and external evaluation of the grouping.
 #'
 #' @keywords internal
 #'
 
-apclusterK_manhattan = function(data, clusters, columnClass, metric) {
+apclusterK_manhattan = function(dt, clusters, columnClass, metric) {
   start.time <- Sys.time()
 
-  if ('data.frame' %in% class(data))
-    data = as.matrix(data)
+  if ('data.frame' %in% class(dt))
+    dt = as.matrix(dt)
 
   numeric_cluster <- ifelse(!is.numeric(clusters),1,0)
 
@@ -106,7 +106,7 @@ apclusterK_manhattan = function(data, clusters, columnClass, metric) {
 
   appcluster_manhattan <- tryCatch({
     apclusterK(negDistMat(r = CONST_TWO, method = CONST_MANHATTAN),
-                          x = data,
+                          x = dt,
                           K = clusters)
   },
 
@@ -116,11 +116,11 @@ apclusterK_manhattan = function(data, clusters, columnClass, metric) {
 
   if (!is.null(appcluster_manhattan)) {
 
-    cluster_appcluster_manhattan = fill_cluster_vector(data, appcluster_manhattan)
+    cluster_appcluster_manhattan = fill_cluster_vector(dt, appcluster_manhattan)
 
     ev_apcluster_ma <-
       tryCatch({
-        external_validation(c(data[, columnClass]),
+        external_validation(c(dt[, columnClass]),
                             cluster_appcluster_manhattan,metric)
 
       },
@@ -133,7 +133,7 @@ apclusterK_manhattan = function(data, clusters, columnClass, metric) {
       internal_validation(
         distance = CONST_NULL,
         clusters_vector = cluster_appcluster_manhattan,
-        data = data,
+        dataf = dt,
         method = CONST_MANHATTAN,
         metric
       )
@@ -163,24 +163,24 @@ apclusterK_manhattan = function(data, clusters, columnClass, metric) {
 }
 
 
-#' Method that runs the apclusterK algorithm using the minkowski metric to make an external or internal validation of the cluster
+#' Method that runs the apclusterK algorithm using the minkowski metric to make an external or internal validation of the cluster.
 #'
-#' @param data matrix or data frame
-#' @param clusters number of clusters
-#' @param columnClass number of column, for example if a dataset has five column,
-#' we can select column four to calculate alidation
-#' @param metric metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
+#' @param dt matrix or data frame with the set of values to be applied to the algorithm.
+#' @param clusters is an integer that indexes the number of clusters we want to create.
+#' @param columnClass is an integer with the number of columns, for example if a dataset has five column,
+#' we can select column four to calculate alidation.
+#' @param metric is a characters vector with the metrics avalaible in the package. The metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the grouping
+#' @return returns a list with both the internal and external evaluation of the grouping.
 #'
 #' @keywords internal
 #'
 
-apclusterK_minkowski = function(data, clusters, columnClass, metric) {
+apclusterK_minkowski = function(dt, clusters, columnClass, metric) {
   start.time <- Sys.time()
 
-  if ('data.frame' %in% class(data))
-    data = as.matrix(data)
+  if ('data.frame' %in% class(dt))
+    dt = as.matrix(dt)
 
   numeric_cluster <- ifelse(!is.numeric(clusters),1,0)
 
@@ -189,7 +189,7 @@ apclusterK_minkowski = function(data, clusters, columnClass, metric) {
 
   appcluster_minkowski <- tryCatch({
     apclusterK(negDistMat(r = CONST_TWO, method = CONST_MINKOWSKI),
-                          x = data,
+                          x = dt,
                           K = clusters)
   },
 
@@ -199,11 +199,11 @@ apclusterK_minkowski = function(data, clusters, columnClass, metric) {
 
   if (!is.null(appcluster_minkowski)) {
 
-    cluster_appcluster_minkowski = fill_cluster_vector(data, appcluster_minkowski)
+    cluster_appcluster_minkowski = fill_cluster_vector(dt, appcluster_minkowski)
 
     ev_apcluster_mi <-
       tryCatch({
-        external_validation(c(data[, columnClass]),
+        external_validation(c(dt[, columnClass]),
                             cluster_appcluster_minkowski,metric)
 
       },
@@ -216,7 +216,7 @@ apclusterK_minkowski = function(data, clusters, columnClass, metric) {
       internal_validation(
         distance = CONST_NULL,
         clusters_vector = cluster_appcluster_minkowski,
-        data = data,
+        dataf = dt,
         method = CONST_MINKOWSKI,
         metric
       )
