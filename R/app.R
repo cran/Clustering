@@ -1,12 +1,16 @@
 #' @title Clustering GUI.
 #'
-#' @description Method that allows us to execute the main algorithm in graphic interface mode instead of through the console.
+#' @description Method that allows us to execute the main algorithm in graphic
+#' interface mode instead of through the console.
 #'
 #' @details The operation of this method is to generate a graphical user.
-#' interface to be able to execute the clustering algorithm without knowing the parameters.
-#' Its operation is very simple, we can change the values and see the behavior quickly.
+#' interface to be able to execute the clustering algorithm without knowing the
+#' parameters.
+#' Its operation is very simple, we can change the values and see the behavior
+#' quickly.
 #'
-#' @return GUI with the parameters of the algorithm and their representation in tables and graphs.
+#' @return GUI with the parameters of the algorithm and their representation in
+#' tables and graphs.
 #'
 #' @importFrom
 #' shiny runApp dataTableOutput renderDataTable runExample
@@ -62,45 +66,81 @@ appClustering <- function() {
 #'
 #' @title Clustering algorithm.
 #'
-#' @description Discovering the behavior of attributes in a set of clustering packages based on evaluation metrics.
+#' @description Discovering the behavior of attributes in a set of clustering
+#' packages based on evaluation metrics.
 #'
-#' @param path The path of file. \code{NULL} It is only allowed to use path or df but not both at the same time. Only files in .dat, .csv or arff format are allowed.
-#' @param df data matrix or data frame, or dissimilarity matrix. \code{NULL} If you want to use training and test \code{basketball} attributes.
-#' @param packages character vector with the packets running the algorithm. \code{NULL} The seven packages implemented are: cluster, ClusterR, advclust, amap, apcluster,
-#'        gama, pvclust. \cr By default runs all packages.
-#' @param algorithm character vector with the algorithms implemented within the package. \code{NULL} The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,
-#'        hclust,apclusterK,agnes,clara,daisy, \cr diana,fanny,mona,pam,gmm,kmeans_arma,kmeans_rcpp,mini_kmeans,gama,\cr pvclust.
-#' @param min An integer with the minimum number of clusters This data is necessary to indicate the minimum number of clusters when grouping the data. The default value is \code{3}.
-#' @param max An integer with the maximum number of clusters. This data is necessary to indicate the maximum number of clusters when grouping the data. The default value is \code{4}.
-#' @param metrics Character vector with the metrics implemented to evaluate the distribution of the data in clusters. \code{NULL} The night metrics implemented are: entropy, variation_information,\cr
+#' @param path The path of file. \code{NULL} It is only allowed to use path or
+#' df but not both at the same time. Only files in .dat, .csv or arff format are
+#'  allowed.
+#' @param df data matrix or data frame, or dissimilarity matrix. \code{NULL} If
+#' you want to use training and test \code{basketball} attributes.
+#' @param packages character vector with the packets running the algorithm.
+#' \code{NULL} The seven packages implemented are: cluster, ClusterR, advclust,
+#' amap, apcluster, gama, pvclust. \cr By default runs all packages.
+#' @param algorithm character vector with the algorithms implemented within the
+#' package. \code{NULL} The algorithms implemented are: fuzzy_cm,fuzzy_gg,
+#' fuzzy_gk,hclust,apclusterK,agnes,clara,daisy, \cr diana,fanny,mona,pam,gmm,
+#' kmeans_arma,kmeans_rcpp,mini_kmeans,gama,\cr pvclust.
+#' @param min An integer with the minimum number of clusters This data is
+#' necessary to indicate the minimum number of clusters when grouping the data.
+#' The default value is \code{3}.
+#' @param max An integer with the maximum number of clusters. This data is
+#' necessary to indicate the maximum number of clusters when grouping the data.
+#' The default value is \code{4}.
+#' @param metrics Character vector with the metrics implemented to evaluate the
+#' distribution of the data in clusters. \code{NULL} The night metrics
+#' implemented are: entropy, variation_information,\cr
 #' precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
-#' @param attributes an boolean which indicates that if we want to show as a result the attributes of the datasets or the numerical value of the calculation of the metrics. The default value is \code{F}.
+#' @param attributes an boolean which indicates that if we want to show as a
+#' result the attributes of the datasets or the numerical value of the
+#' calculation of the metrics. The default value is \code{F}.
 #'
-#' @details The operation of this algorithm is to evaluate how the attributes of a dataset or a set of datasets behave in
-#' different grouping algorithms. To do this, it is necessary to indicate the type of evaluation you want to make on the
-#' distribution of the data. To be able to execute the algorithm it is necessary to indicate the number of clusters
-#' \code{min} and \code{max}, the algorithms \code{algorithm} or packages \code{packages} that we want to cluster,
-#' the metrics \code{metrics} and if we want that the results of evaluation are the own classified attributes or numerical values \code{attributes}.
+#' @details The operation of this algorithm is to evaluate how the attributes of
+#' a dataset or a set of datasets behave in different grouping algorithms. To do
+#' this, it is necessary to indicate the type of evaluation you want to make on
+#' the
+#' distribution of the data. To be able to execute the algorithm it is necessary
+#' to indicate the number of clusters
+#' \code{min} and \code{max}, the algorithms \code{algorithm} or packages
+#' \code{packages} that we want to cluster,
+#' the metrics \code{metrics} and if we want that the results of evaluation are
+#' the own classified attributes or numerical values \code{attributes}.
 #'
 #' @section How does this algorithm work?:
-#' This algorithm improves and complements existing implementations of clustering algorithms.
+#' This algorithm improves and complements existing implementations of
+#' clustering algorithms.
 #'
-#' The approaches that exist, are many algorithms that run parallel to the algorithms, without being able to be compared
-#' between them. In addition, it was necessary to indicate which variable of the dataset is required to be executed.
-#' In addition, depending on the package there are some implementations or others to evaluate the groupings of data,
-#' so it is sometimes complicated to compare the groupings between different packages.
+#' The approaches that exist, are many algorithms that run parallel to the
+#' algorithms, without being able to be compared between them. In addition, it
+#' was necessary to indicate which variable of the dataset is required to be
+#' executed.
+#' In addition, depending on the package there are some implementations or
+#' others to evaluate the groupings of data, so it is sometimes complicated to
+#' compare the groupings between different packages.
 #'
-#' With this algorithm we can solve the problems mentioned above and determine which algorithm has the best behavior
-#' for the set of attributes as well as the most efficient number of clusters.
+#' With this algorithm we can solve the problems mentioned above and determine
+#' which algorithm has the best behavior for the set of attributes as well as
+#' the most efficient number of clusters.
 #'
 #'
-#' @return a matrix with the result of running all the metrics of the algorithms contained in the packages we indicated. We also obtain information with the types of metrics, algorithms and packages executed.
+#' @return a matrix with the result of running all the metrics of the algorithms
+#' contained in the packages we indicated. We also obtain information with the
+#' types of metrics, algorithms and packages executed.
+#'
 #' \itemize{
-#'        \item result It is a list with the algorithms, metrics and variables defined in the execution of the algorithm.
-#'        \item has_internal_metrics Boolean field to indicate if there are internal metrics such as: dunn, silhoutte and connectivity.
-#'        \item has_external_metrics Boolean field to indicate if there are external metrics such as: precision, recall, f-measure, entropy, variation information and fowlkes-mallows.
-#'        \item algorithms_execute Character vector with the algorithms executed. These algorithms have been mentioned in the definition of the parameters.
-#'        \item measures_execute Character vector with the measures executed. These measures have been mentioned in the definition of the parameters.
+#'        \item result It is a list with the algorithms, metrics and variables
+#'        defined in the execution of the algorithm.
+#'        \item has_internal_metrics Boolean field to indicate if there are
+#'        internal metrics such as: dunn, silhoutte and connectivity.
+#'        \item has_external_metrics Boolean field to indicate if there are
+#'        external metrics such as: precision, recall, f-measure, entropy,
+#'        variation information and fowlkes-mallows.
+#'        \item algorithms_execute Character vector with the algorithms
+#'        executed. These algorithms have been mentioned in the definition of
+#'        the parameters.
+#'        \item measures_execute Character vector with the measures executed.
+#'        These measures have been mentioned in the definition of the
+#'        parameters.
 #' }
 #'
 #'
@@ -117,7 +157,8 @@ appClustering <- function() {
 #' cluster agnes clara daisy diana fanny silhouette mona pam
 #'
 #' @importFrom
-#' ClusterR GMM predict_GMM distance_matrix KMeans_rcpp predict_KMeans KMeans_arma MiniBatchKmeans predict_MBatchKMeans center_scale
+#' ClusterR GMM predict_GMM distance_matrix KMeans_rcpp predict_KMeans
+#' KMeans_arma MiniBatchKmeans predict_MBatchKMeans center_scale
 #'
 #' @importFrom
 #' advclust fuzzy.CM fuzzy.GG fuzzy.GK
@@ -255,7 +296,8 @@ clustering <- function(path = NULL,
     stop("The max field must be numeric")
 
   if (min > max) {
-    stop("The minimum cluster number must be less than the maximum cluster number")
+    stop("The minimum cluster number must be less than the maximum cluster
+         number")
   }
 
   if (!is.null(metrics) && !is.vector(metrics)) {
@@ -277,6 +319,12 @@ clustering <- function(path = NULL,
     stop("The attributes field must have only one element")
   }
 
+  name_dataframe <- CONST_TIME_DF
+
+  if (!is.null(df)){
+    name_dataframe <- unlist(strsplit(x = toString(match.call()),split = ","))[2]
+  }
+
   #Start of the main method that executes the datasets.
 
   execute_datasets(path,
@@ -286,7 +334,8 @@ clustering <- function(path = NULL,
                    min,
                    max,
                    metrics,
-                   attributes)
+                   attributes,
+                   name_dataframe)
 }
 
 
@@ -296,15 +345,28 @@ clustering <- function(path = NULL,
 #' @description Method of performing information processing
 #'
 #' @param path  path where the datasets are located.
-#' @param df data matrix or data frame, or dissimilarity matrix, depending on the value of the argument.
-#' @param packages array defining the clustering package. The seven packages implemented are: cluster, ClusterR, advclust, amap, apcluster, gama, pvclust. By default runs all packages.
-#' @param algorithm array with the algorithms that implement the package. The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,hclust,apclusterK,agnes,clara,daisy,diana,fanny,mona,pam,gmm,kmeans_arma,kmeans_rcpp,mini_kmeans,gama,pvclust.
+#' @param df data matrix or data frame, or dissimilarity matrix, depending on
+#' the value of the argument.
+#' @param packages array defining the clustering package. The seven packages
+#' implemented are: cluster, ClusterR, advclust, amap, apcluster, gama, pvclust.
+#' By default runs all packages.
+#' @param algorithm array with the algorithms that implement the package.
+#' The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,hclust,apclusterK,
+#' agnes,clara,daisy,diana,fanny,mona,pam,gmm,kmeans_arma,kmeans_rcpp,
+#' mini_kmeans,gama,pvclust.
 #' @param cluster_min minimum number of clusters. at least one must be.
-#' @param cluster_max maximum number of clusters. cluster_max must be greater or equal cluster_min.
-#' @param metrics array defining the metrics avalaible in the package. The night metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
-#' @param attributes accepts Boolean values. If true as a result it shows the attribute that behaves best otherwise it shows the value of the executed metric.
+#' @param cluster_max maximum number of clusters. cluster_max must be greater or
+#' equal cluster_min.
+#' @param metrics array defining the metrics avalaible in the package. The night
+#' metrics implemented are: entropy, variation_information,precision,recall,
+#' f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
+#' @param attributes accepts Boolean values. If true as a result it shows the
+#' attribute that behaves best otherwise it shows the value of the executed
+#' metric.
+#' @param name_dataframe name of data.frame when df is fill.
 #'
-#' @return returns a matrix with the result of running all the metrics of the algorithms contained in the packages we indicated.
+#' @return returns a matrix with the result of running all the metrics of the
+#' algorithms contained in the packages we indicated.
 #'
 #' @keywords internal
 #'
@@ -316,7 +378,8 @@ execute_datasets <- function(path,
                              cluster_min,
                              cluster_max,
                              metrics,
-                             attributes) {
+                             attributes,
+                             name_dataframe) {
   # Initialization of the parameter format
 
   on.exit(options(scipen = 999))
@@ -335,7 +398,8 @@ execute_datasets <- function(path,
     measures_execute = measure_package(packages)
 
   } else {
-    # In the case of indicating the algorithm parameter, we carry out the calculation to obtain the dissimilarity measurements
+    # In the case of indicating the algorithm parameter, we carry out the
+    # calculation to obtain the dissimilarity measurements
 
     algorithms_execute <- algorithm
 
@@ -362,7 +426,8 @@ execute_datasets <- function(path,
 
   directory_files <- CONST_NULL
 
-  # If we have indicated the path field, we read all the existing files in that directory.
+  # If we have indicated the path field, we read all the existing files in that
+  # directory.
 
   if (!is.null(path)) {
     directory_files <- path_dataset(path)
@@ -386,8 +451,8 @@ execute_datasets <- function(path,
   }
 
   if (!is.null(directory_files) || !is.null(df)) {
-    # We carry out the calculations of all the algorithms and metrics for the files or datatsets
-    # indicated at the beginning of the algorithm.
+    # We carry out the calculations of all the algorithms and metrics for the
+    # files or datatsets indicated at the beginning of the algorithm.
 
     results <-
       execute_package_parallel(
@@ -403,7 +468,8 @@ execute_datasets <- function(path,
         numberClusters,
         numberDataSets,
         is_metric_external,
-        is_metric_internal
+        is_metric_internal,
+        name_dataframe
       )
   }
 
@@ -416,7 +482,9 @@ execute_datasets <- function(path,
 
   }
 
-  #We return a list with the result of the execution, algorithms, packages, tables in latex format with the separation of the results in internal and external
+  # We return a list with the result of the execution, algorithms, packages,
+  # tables in latex format with the separation of the results in internal and
+  # external
 
   res <-
     list(
@@ -434,21 +502,38 @@ execute_datasets <- function(path,
 
 #' @title Evaluation clustering algorithm.
 #'
-#' @description Method that evaluates clustering algorithm from a file directory or dataframe.
+#' @description Method that evaluates clustering algorithm from a file directory
+#' or dataframe.
 #'
-#' @param directory_files It's a string with the route where the datasets are located.
-#' @param df data matrix or data frame, or dissimilarity matrix, depending on the value of the argument.
-#' @param algorithms_execute character vector with the algorithms to be executed. The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,hclust,apclusterK,agnes,clara,daisy,diana,fanny,mona,pam,gmm,kmeans_arma,kmeans_rcpp,mini_kmeans,gama,pvclust.
-#' @param measures_execute character array with the measurements of dissimilarity to be executed. Depending on the algorithm, one or the other is implemented. Among them we highlight: Euclidena, Manhattan, etc.
+#' @param directory_files It's a string with the route where the datasets are
+#' located.
+#' @param df data matrix or data frame, or dissimilarity matrix, depending on
+#' the value of the argument.
+#' @param algorithms_execute character vector with the algorithms to be
+#' executed. The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,hclust,
+#' apclusterK,agnes,clara,daisy,diana,fanny,mona,pam,gmm,kmeans_arma,
+#' kmeans_rcpp,mini_kmeans,gama,pvclust.
+#' @param measures_execute character array with the measurements of
+#' dissimilarity to be executed. Depending on the algorithm, one or the other is
+#' implemented. Among them we highlight: Euclidena, Manhattan, etc.
 #' @param cluster_min minimum number of clusters.
-#' @param cluster_max maximum number of clusters. cluster_max must be greater or equal cluster_min.
-#' @param metrics_execute character array defining the metrics to be executed. The night metrics implemented are: entropy, variation_information,precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
-#' @param attributes accepts Boolean values. If true as a result it shows the attribute that behaves best otherwise it shows the value of the executed metric.
+#' @param cluster_max maximum number of clusters. cluster_max must be greater or
+#' equal cluster_min.
+#' @param metrics_execute character array defining the metrics to be executed.
+#' The night metrics implemented are: entropy, variation_information,precision,
+#' recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.
+#' @param attributes accepts Boolean values. If true as a result it shows the
+#' attribute that behaves best otherwise it shows the value of the executed
+#' metric.
 #' @param number_algorithms It's a numeric field with the number of algorithms.
 #' @param numberClusters It's a numeric field with the difference between clusters.
 #' @param numberDataSets It's a numeric field with the number of datasets.
+#' @param is_metric_external boolean field to indicate whether to run external metrics.
+#' @param is_metric_internal boolean field to indicate whether to run internal metrics.
+#' @param name_dataframe name of data.frame when is fill.
 #'
-#' @return returns a list with the result matrix of evaluating the data from the indicated algorithms, metrics and number of clusters.
+#' @return returns a list with the result matrix of evaluating the data from the
+#' indicated algorithms, metrics and number of clusters.
 #'
 #' @keywords internal
 #'
@@ -466,7 +551,8 @@ execute_package_parallel <-
            numberClusters,
            numberDataSets,
            is_metric_external,
-           is_metric_internal) {
+           is_metric_internal,
+           name_dataframe) {
     # We start the process of creating clusters to perform parallel runs.
 
     cl <-
@@ -482,7 +568,8 @@ execute_package_parallel <-
 
     df_result <-
       matrix(
-        nrow = number_algorithms * length(measures_execute) * numberClusters * numberDataSets,
+        nrow = number_algorithms * length(measures_execute) * numberClusters *
+          numberDataSets,
         ncol = numberColumns
       )
 
@@ -574,15 +661,16 @@ execute_package_parallel <-
               # We initialize the evaluation metrics
 
               if (!is.null(df)) {
-                #If the indicated parameter is the dataframe, we make the appropriate calculations.
-
+                # If the indicated parameter is the dataframe, we make the
+                # appropriate calculations.
+                nameLuis <- deparse(df);
                 result <-
                   value(
                     evaluate_all_column_dataset(
                       as.matrix(df),
                       measures_execute[j],
                       k,
-                      CONST_TIME_DF,
+                      name_dataframe,
                       metrics_execute
                     )
                   )
@@ -603,7 +691,7 @@ execute_package_parallel <-
               }
 
               name_file = ifelse(!is.null(df),
-                                 CONST_TIME_DF,
+                                 name_dataframe,
                                  directory_files[m])
 
               entropy = result$external$entropy
@@ -618,7 +706,8 @@ execute_package_parallel <-
               connectivity = result$internal$connectivity
               silhouette = result$internal$silhouette
 
-              # We carry out the assignment of the calculations for each of the attributes.
+              # We carry out the assignment of the calculations for each of the
+              # attributes.
 
               for (c in 1:length(entropy)) {
                 information <- value(
@@ -700,7 +789,8 @@ execute_package_parallel <-
                         entropy
                       else
                         CONST_NULL,
-                      if (CONST_VARIATION_INFORMATION_METRIC %in% metrics_execute)
+                      if (CONST_VARIATION_INFORMATION_METRIC %in%
+                          metrics_execute)
                         variation_information
                       else
                         CONST_NULL,
@@ -712,7 +802,8 @@ execute_package_parallel <-
                         recall
                       else
                         CONST_NULL,
-                      if (CONST_FOWLKES_MALLOWS_INDEX_METRIC %in% metrics_execute)
+                      if (CONST_FOWLKES_MALLOWS_INDEX_METRIC %in%
+                          metrics_execute)
                         fowlkes_mallows_index
                       else
                         CONST_NULL,
@@ -803,18 +894,26 @@ print.clustering <- function(x, ...)
 #'
 #' @title Returns the clustering result sorted by a set of metrics.
 #'
-#' @description This function receives a clustering object and sorts the indicator columns by parameter.
+#' @description This function receives a clustering object and sorts the
+#' indicator columns by parameter.
 #' By default it performs sorting by the algorithm field.
 #'
 #' @param x is an \code{clustering} object.
 #'
-#' @param decreasing A logical indicating if the sort should be increasing or decreasing. By default, decreasing.
+#' @param decreasing A logical indicating if the sort should be increasing or
+#' decreasing. By default, decreasing.
 #'
-#' @param ... Additional parameters as "by", a String with the name of the evaluation measure to order by. Valid values are: \code{Algorithm, Distance, Clusters, Dataset, Ranking, timeExternal, entropy, variation_information, precision, recall, f_measure, fowlkes_mallows_index, connectivity, dunn, silhouette, timeInternal}.
+#' @param ... Additional parameters as "by", a String with the name of the
+#' evaluation measure to order by. Valid values are: \code{Algorithm, Distance,
+#' Clusters, Dataset, Ranking, timeExternal, entropy, variation_information,
+#' precision, recall, f_measure, fowlkes_mallows_index, connectivity, dunn,
+#' silhouette, timeInternal}.
 #'
-#' @details The additional argument in "..." is the 'by' argument, which is a array
-#'          with the name of the evaluation measure to order by. Valid value are:
-#'          \code{Algorithm, Distance, Clusters, Dataset, Ranking, timeExternal, entropy, variation_information, precision, recall, f_measure, fowlkes_mallows_index, connectivity, dunn, silhouette, timeInternal}.
+#' @details The additional argument in "..." is the 'by' argument, which is a
+#' array with the name of the evaluation measure to order by. Valid value are:
+#' \code{Algorithm, Distance, Clusters, Dataset, Ranking, timeExternal, entropy,
+#' variation_information, precision, recall, f_measure, fowlkes_mallows_index,
+#' connectivity, dunn, silhouette, timeInternal}.
 #'
 #' @return another \code{clustering} object with the evaluation measures sorted
 #'
@@ -826,7 +925,9 @@ print.clustering <- function(x, ...)
 #'
 #' library(Clustering)
 #'
-#' result <- clustering(df = cluster::agriculture,min = 4, max = 4,algorithm='gmm',metrics='recall')
+#' result <-
+#' clustering(df = cluster::agriculture,min = 4, max = 4,algorithm='gmm',
+#' metrics='recall')
 #'
 #' sort(result, FALSE, 'recall')
 #'
@@ -871,24 +972,30 @@ sort.clustering <- function(x, decreasing = TRUE, ...) {
 }
 
 #'
-#' @title Filter metrics in a \code{clustering} object returning a new \code{clustering} object.
+#' @title Filter metrics in a \code{clustering} object returning a new
+#' \code{clustering} object.
 #'
-#' @description Generates a new \code{clustering} object containing the metrics that passed the filter
+#' @description Generates a new \code{clustering} object containing the metrics
+#' that passed the filter
 #' specified.
 #'
 #' @param clustering The \code{clustering} object to filter.
 #'
 #' @param condition Expression to filter the \code{clustering} object
 #'
-#' @details This function allows you to filter the data set for a given evaluation metric.
+#' @details This function allows you to filter the data set for a given
+#' evaluation metric.
 #' The evaluation metrics available are:
-#' \code{Algorithm, Distance, Clusters, Dataset, Ranking, timeExternal, entropy, variation_information, precision, recall, f_measure, fowlkes_mallows_index, connectivity, dunn, silhouette, timeInternal}.
+#' \code{Algorithm, Distance, Clusters, Dataset, Ranking, timeExternal, entropy,
+#' variation_information, precision, recall, f_measure, fowlkes_mallows_index,
+#' connectivity, dunn, silhouette, timeInternal}.
 #'
 #' @examples
 #'
 #' library(Clustering)
 #'
-#' result <- clustering(package = 'clusterr', df = Clustering::basketball, min=3, max=4)
+#' result <- clustering(package = 'clusterr', df = Clustering::basketball,
+#' min=3, max=4)
 #'
 #' result[precision > 0.14 & dunn > 0.11]
 #'
@@ -1059,12 +1166,15 @@ print.clustering_sort <- function(x, ...) {
 #'
 #' @title Best rated external metrics.
 #'
-#' @description method in charge of searching for each algorithm those that have the best external classification.
+#' @description method in charge of searching for each algorithm those that have
+#' the best external classification.
 #'
-#' @param df matrix or data frame with the result of running the clustering algorithm.
+#' @param df matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
-#' @description Method that looks for those external attribute that are better classified,
-#' making use of the ranking column. In this way we discard the rest of the attribute and
+#' @description Method that looks for those external attribute that are better
+#' classified, making use of the ranking column. In this way we discard the rest
+#' of the attribute and
 #' only work with those that give the best response to the algorithm in question.
 #'
 #' @return Returns a data.frame with the best classified external attribute.
@@ -1109,13 +1219,17 @@ print.best_ranked_external_metrics <- function(x, ...)
 #'
 #' @title Best rated internal metrics.
 #'
-#' @description method in charge of searching for each algorithm those that have the best internal classification.
+#' @description method in charge of searching for each algorithm those that have
+#' the best internal classification.
 #'
-#' @param df matrix or data frame with the result of running the clustering algorithm.
+#' @param df matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
-#' @description Method that looks for those internal attributes that are better classified,
-#' making use of the ranking column. In this way we discard the rest of the attributes and
-#' only work with those that give the best response to the algorithm in question.
+#' @description Method that looks for those internal attributes that are better
+#' classified,
+#' making use of the ranking column. In this way we discard the rest of the
+#' attributes and only work with those that give the best response to the
+#' algorithm in question.
 #'
 #' @return Returns a data.frame with the best classified internal attributes.
 #'
@@ -1159,15 +1273,19 @@ print.best_ranked_internal_metrics <- function(x, ...)
 #'
 #' @title Evaluate external validations by algorithm.
 #'
-#' @description Method that calculates which algorithm behaves best for the datasets provided.
+#' @description Method that calculates which algorithm behaves best for the
+#' datasets provided.
 #'
-#' @param df data matrix or data frame with the result of running the clustering algorithm.
+#' @param df data matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
-#' @details The operation of this method is to determine which algorithm has better behavior
-#' regardless of the measure of dissimilarity calculated, so we can determine which algorithm
-#' returns better results from the attributes and measures of dissimilarity.
+#' @details The operation of this method is to determine which algorithm has
+#' better behavior regardless of the measure of dissimilarity calculated, so we
+#' can determine which algorithm eturns better results from the attributes and
+#' measures of dissimilarity.
 #'
-#' @return a data.frame with all the algorithms that obtain the best results regardless of the dissimilarity measure used.
+#' @return a data.frame with all the algorithms that obtain the best results
+#' regardless of the dissimilarity measure used.
 #'
 #' @export
 #'
@@ -1211,15 +1329,19 @@ print.evaluate_validation_external_by_metrics <- function(x, ...)
 #'
 #' @title Evaluate internal validations by algorithm.
 #'
-#' @description Method that calculates which algorithm behaves best for the datasets provided.
+#' @description Method that calculates which algorithm behaves best for the
+#' datasets provided.
 #'
-#' @param df data matrix or data frame with the result of running the clustering algorithm.
+#' @param df data matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
-#' @details The operation of this method is to determine which algorithm has better behavior
-#' regardless of the measure of dissimilarity calculated, so we can determine which algorithm
+#' @details The operation of this method is to determine which algorithm has
+#' better behavior regardless of the measure of dissimilarity calculated, so we
+#' can determine which algorithm
 #' returns better results from the attributes and measures of dissimilarity.
 #'
-#' @return a data.frame with all the algorithms that obtain the best results regardless of the dissimilarity measure used.
+#' @return a data.frame with all the algorithms that obtain the best results
+#' regardless of the dissimilarity measure used.
 #'
 #' @export
 #'
@@ -1246,7 +1368,8 @@ print.evaluate_validation_external_by_metrics <- function(x, ...)
 evaluate_validation_internal_by_metrics <- function(df) {
   df_best_ranked <- best_ranked_internal_metrics(df)
   result <-
-    list("result" = calculate_validation_internal_by_metrics(df_best_ranked$result))
+    list("result" =
+           calculate_validation_internal_by_metrics(df_best_ranked$result))
 
   class(result) <- "evaluate_validation_internal_by_metrics"
 
@@ -1263,15 +1386,20 @@ print.evaluate_validation_internal_by_metrics <- function(x, ...)
 #'
 #' @title Evaluation of the algorithms by measures of dissimilarity.
 #'
-#' @description Method that calculates which algorithm and which metric behaves best for the datasets provided.
+#' @description Method that calculates which algorithm and which metric behaves
+#' best for the datasets provided.
 #'
-#' @param df data matrix or data frame with the result of running the clustering algorithm.
+#' @param df data matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
-#' @details Method that calculates the behavior of dissimilarity measures by algorithm,
-#' so we can evaluate which of the different measures of dissimilarity used by the algorithms presents the best behavior.
-#' This method should be used to determine which dissimilarity measure has the best behavior for external evaluation measures.
+#' @details Method that calculates the behavior of dissimilarity measures by
+#' algorithm, so we can evaluate which of the different measures of
+#' dissimilarity used by the algorithms presents the best behavior.
+#' This method should be used to determine which dissimilarity measure has the
+#' best behavior for external evaluation measures.
 #'
-#' @return a data.frame with the algorithms classified by measures of dissimilarity.
+#' @return a data.frame with the algorithms classified by measures of
+#' dissimilarity.
 #'
 #' @export
 #'
@@ -1294,7 +1422,8 @@ print.evaluate_validation_internal_by_metrics <- function(x, ...)
 evaluate_best_validation_external_by_metrics <- function(df) {
   df_best_ranked <- best_ranked_external_metrics(df)
   result <-
-    list("result" = calculate_best_validation_external_by_metrics(df_best_ranked$result))
+    list("result" =
+           calculate_best_validation_external_by_metrics(df_best_ranked$result))
 
   class(result) <- "evaluate_best_validation_external_by_metrics"
 
@@ -1313,15 +1442,20 @@ print.evaluate_best_validation_external_by_metrics <-
 #'
 #' @title Evaluation of the algorithms by measures of dissimilarity.
 #'
-#' @description Method that calculates which algorithm and which metric behaves best for the datasets provided.
+#' @description Method that calculates which algorithm and which metric behaves
+#' best for the datasets provided.
 #'
-#' @param df data matrix or data frame with the result of running the clustering algorithm.
+#' @param df data matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
-#' @details Method that calculates the behavior of dissimilarity measures by algorithm,
-#' so we can evaluate which of the different measures of dissimilarity used by the algorithms presents the best behavior.
-#' This method should be used to determine which dissimilarity measure has the best behavior for intenal evaluation measures.
+#' @details Method that calculates the behavior of dissimilarity measures by
+#' algorithm, so we can evaluate which of the different measures of
+#' dissimilarity used by the algorithms presents the best behavior.
+#' This method should be used to determine which dissimilarity measure has the
+#' best behavior for intenal evaluation measures.
 #'
-#' @return a data.frame with the algorithms classified by measures of dissimilarity.
+#' @return a data.frame with the algorithms classified by measures of
+#' dissimilarity.
 #'
 #' @export
 #'
@@ -1329,7 +1463,8 @@ print.evaluate_best_validation_external_by_metrics <-
 #'
 #' @examples
 #'
-#' result = clustering(df = cluster::agriculture, min = 4, max = 5, algorithm='gmm', attributes = TRUE)
+#' result = clustering(df = cluster::agriculture, min = 4, max = 5,
+#' algorithm='gmm', attributes = TRUE)
 #'
 #' evaluate_best_validation_internal_by_metrics(result)
 #'
@@ -1347,7 +1482,8 @@ print.evaluate_best_validation_external_by_metrics <-
 evaluate_best_validation_internal_by_metrics <- function(df) {
   df_best_ranked <- best_ranked_internal_metrics(df)
   result <-
-    list("result" = calculate_best_validation_internal_by_metrics(df_best_ranked$result))
+    list("result" =
+           calculate_best_validation_internal_by_metrics(df_best_ranked$result))
 
   class(result) <- "evaluate_best_validation_internal_by_metrics"
 
@@ -1365,16 +1501,20 @@ print.evaluate_best_validation_internal_by_metrics <-
 #'
 #' @title External results by algorithm
 #'
-#' @description Method that returns a data.frame with the algorithm and the metric indicated as parameters.
+#' @description Method that returns a data.frame with the algorithm and the
+#' metric indicated as parameters.
 #'
-#' @param df data matrix or data frame with the result of running the clustering algorithm.
+#' @param df data matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
-#' @param algorithm It's a string with the algorithm we want to evaluate your results
+#' @param algorithm It's a string with the algorithm we want to evaluate your
+#' results
 #'
 #' @return a data.frame with the results of the algorithm indicated as parameter.
 #'
-#' @details The functionality of this method is to return as a result a data.frame with the algorithm
-#' indicated as a parameter along with the rest of the dissimilarity measurements and the
+#' @details The functionality of this method is to return as a result a
+#' data.frame with the algorithm indicated as a parameter along with the rest of
+#' the dissimilarity measurements and the
 #' external evaluation metrics.
 #'
 #' @export
@@ -1410,7 +1550,8 @@ result_external_algorithm_by_metric <- function(df, algorithm) {
   df_ranked <- best_ranked_external_metrics(df)
 
   result <-
-    list("result" = show_result_external_algorithm_by_metric(df_ranked$result, algorithm))
+    list("result" = show_result_external_algorithm_by_metric(df_ranked$result,
+                                                             algorithm))
 
   class(result) <- "result_external_algorithm_by_metric"
 
@@ -1427,17 +1568,20 @@ print.result_external_algorithm_by_metric <- function(x, ...)
 #'
 #' @title Internal results by algorithm
 #'
-#' @description Method that returns a data.frame with the algorithm and the metric indicated as parameters.
+#' @description Method that returns a data.frame with the algorithm and the
+#' metric indicated as parameters.
 #'
-#' @param df data matrix or data frame with the result of running the clustering algorithm.
+#' @param df data matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
-#' @param algorithm It's a string with the algorithm we want to evaluate your results
+#' @param algorithm It's a string with the algorithm we want to evaluate your
+#' results
 #'
 #' @return a data.frame with the results of the algorithm indicated as parameter.
 #'
-#' @details The functionality of this method is to return as a result a data.frame with the algorithm
-#' indicated as a parameter along with the rest of the dissimilarity measurements and the
-#' internal evaluation metrics.
+#' @details The functionality of this method is to return as a result a
+#' data.frame with the algorithm indicated as a parameter along with the rest of
+#' the dissimilarity measurements and the internal evaluation metrics.
 #'
 #' @export
 #'
@@ -1472,7 +1616,8 @@ result_internal_algorithm_by_metric <- function(df, algorithm) {
   df_ranked <- best_ranked_internal_metrics(df)
 
   result <-
-    list("result" = show_result_internal_algorithm_by_metric(df_ranked$result, algorithm))
+    list("result" = show_result_internal_algorithm_by_metric(df_ranked$result,
+                                                             algorithm))
 
   class(result) <- "result_internal_algorithm_by_metric"
 
@@ -1490,16 +1635,18 @@ print.result_internal_algorithm_by_metric <- function(x, ...)
 #'
 #' @title Graphic representation of the evaluation measures.
 #'
-#' @description Graphical representation of the evaluation measures grouped by cluster.
+#' @description Graphical representation of the evaluation measures grouped by
+#' cluster.
 #'
-#' @param df data matrix or data frame with the result of running the clustering algorithm.
+#' @param df data matrix or data frame with the result of running the clustering
+#' algorithm.
 #'
 #' @param metric it's a string with the name of the metric select to evaluate.
 #'
-#' @details In certain cases the review or filtering of the data is necessary to select the data,
-#' that is why thanks to the graphic representations this task is much easier.
-#' Therefore with this method we will be able to filter the data by metrics
-#' and see the data in a graphical way.
+#' @details In certain cases the review or filtering of the data is necessary to
+#' select the data, that is why thanks to the graphic representations this task
+#' is much easier. Therefore with this method we will be able to filter the data
+#' by metrics and see the data in a graphical way.
 #'
 #' @importFrom
 #'
@@ -1558,7 +1705,8 @@ plot_clustering <- function(df, metric) {
       show_result_internal_algorithm_group_by_clustering(df$result)
   }
 
-  #We calculate the maximum value of l metric. In case the value is infinite we set a limit.
+  # We calculate the maximum value of l metric. In case the value is infinite we
+  # set a limit.
 
   maximum <- as.numeric(max_value_metric(df$result, metric))
 
@@ -1581,8 +1729,15 @@ plot_clustering <- function(df, metric) {
     metric <- paste("as.numeric(", metric, ")")
 
     ggplot(df_best_ranked,
-           aes_string(x = "Clusters", y = metric, fill = 'Algorithm')) + ggplot2::geom_bar(position = 'dodge2', stat =
-                                                                                             'identity') + ggplot2::theme_minimal() + xlab(toupper("")) + ylab(toupper(name_metric))
+           aes_string(x = "Clusters", y = metric, fill = 'Algorithm')) +
+      ggplot2::geom_bar(position = 'dodge2', stat = 'identity') +
+      ggplot2::theme_minimal() + xlab(toupper("CLUSTERS")) +
+      ylab(toupper(name_metric)) +
+      ggplot2::theme(axis.text.x = ggplot2::element_text(size = 15),
+                     axis.title.x = ggplot2::element_text(size = 25),
+                     axis.title.y = ggplot2::element_text(size = 25),
+                     axis.text.y = ggplot2::element_text(size = 15),
+                     legend.text = ggplot2::element_text(size = 15));
 
   } else
     stop("The metric indicate does not exist in the dataframe")
@@ -1592,14 +1747,18 @@ plot_clustering <- function(df, metric) {
 #'
 #' @title Export result of external metrics in latex.
 #'
-#' @description Method that exports the results of internal measurements in latex format to a file.
+#' @description Method that exports the results of internal measurements in
+#' latex format to a file.
 #'
-#' @param df is a dataframe that contains as a parameter a table in latex format with the results of the internal validations.
+#' @param df is a dataframe that contains as a parameter a table in latex format
+#' with the results of the internal validations.
 #'
-#' @param path it's a string with the path to a directory where a file is to be stored in latex format.
+#' @param path it's a string with the path to a directory where a file is to be
+#' stored in latex format.
 #'
-#' @details When we work in latex format and we need to create a table to export the results,
-#' with this method we can export the results of the clustering algorithm to latex.
+#' @details When we work in latex format and we need to create a table to export
+#' the results, with this method we can export the results of the clustering
+#' algorithm to latex.
 #'
 #' @details
 #'
@@ -1655,14 +1814,18 @@ export_file_external <- function(df, path = NULL) {
 #'
 #' @title Export result of internal metrics in latex.
 #'
-#' @description Method that exports the results of external measurements in latex format to a file.
+#' @description Method that exports the results of external measurements in
+#' latex format to a file.
 #'
-#' @param df is a dataframe that contains as a parameter a table in latex format with the results of the external validations.
+#' @param df is a dataframe that contains as a parameter a table in latex format
+#' with the results of the external validations.
 #'
-#' @param path it's a string with the path to a directory where a file is to be stored in latex format.
+#' @param path it's a string with the path to a directory where a file is to be
+#' stored in latex format.
 #'
-#' @details When we work in latex format and we need to create a table to export the results,
-#' with this method we can export the results of the clustering algorithm to latex.
+#' @details When we work in latex format and we need to create a table to export
+#' the results, with this method we can export the results of the clustering
+#' algorithm to latex.
 #'
 #' @export
 #'

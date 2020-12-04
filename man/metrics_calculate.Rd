@@ -9,7 +9,8 @@ metrics_calculate(metrics, variables)
 \arguments{
 \item{metrics}{array with the metrics used in the execution of the package}
 
-\item{variables}{boolean field that indicates if it should show the results of the variables}
+\item{variables}{boolean field that indicates if it should show the results
+of the variables}
 }
 \value{
 list of metrics
