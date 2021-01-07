@@ -1,4 +1,4 @@
-219edd091c0849380073e5dc8c783134 *DESCRIPTION
+10e2264f18bc2db5bbb3f7fedfe60b86 *DESCRIPTION
 b7f6e000a580daa502e04b66d442f5d4 *NAMESPACE
 3418b214b56c2808db019451ed8c4b4d *R/aggExCluster.R
 d1a24b35422062056537d184339735a3 *R/agnes.R
@@ -36,9 +36,9 @@ e5d2889dd9342a3c47910b32b4c080e8 *data/basketball.RData
 3e62aac65969f078bbe4d3d4bea3fd26 *data/stock.RData
 af41273d126ada29d5bd03099ff09a93 *data/stulong.RData
 d36ff859dec75f97154a532511bf5236 *data/weather.RData
-347297ee9172ae7748825f6784c276db *inst/doc/Clustering.R
-9fcd2a0bc65257f646f46647d7f27663 *inst/doc/Clustering.Rmd
-68983650e73836d63cd4cbe6d7f46a33 *inst/doc/Clustering.pdf
+6801d440072c7f62179c0ee70ed12c4c *inst/doc/Clustering.R
+88e568ca8c227ed42816aff321a99c3b *inst/doc/Clustering.Rmd
+ceeda92ce1704391ac84c237442ab608 *inst/doc/Clustering.pdf
 2d8c36240f3e9f15bce03d22ce653fd8 *inst/shiny/clustering/server.R
 f2a336dd0630ec8740ed35645d81387a *inst/shiny/clustering/ui.R
 b50ce105bc63a7143e0da7aeb167c71d *inst/shiny/clustering/www/myjs.js
@@ -165,8 +165,8 @@ f83eb3b6ec781beacd647f5d51e0c4ec *man/stulong.Rd
 82f9257941228147d5d4c4a611697e7f *man/variation_information_metric.Rd
 d04fdb84c44e71b83f5dada7ae8a993a *man/weather.Rd
 8ad4af451ccd6fbae3633b0d8e6e3dcc *tests/testthat/test-clustering.R
-9fcd2a0bc65257f646f46647d7f27663 *vignettes/Clustering.Rmd
-f5a0d73bbe1d782f77cc95c9c6bf5433 *vignettes/bibliography.bib
+88e568ca8c227ed42816aff321a99c3b *vignettes/Clustering.Rmd
+b1311f8518bbeee5a6a6862de24fd7dd *vignettes/bibliography.bib
 58e0f0b948a2a48566531986f767d11a *vignettes/img/app.png
 1087157e1ebd4313c432799fb46940f5 *vignettes/img/app1.png
 5dd747d6d48572b93c964e87ec370929 *vignettes/img/cohesion.png
@@ -179,8 +179,6 @@ ef0e72b0e7bb85bce47bd3dd58c36136 *vignettes/img/external.pdf
 0de9f898196a68e68b7d24391022c5ed *vignettes/img/model.pdf
 81120b747dbe367bb37f76f9056047ce *vignettes/img/partitional.pdf
 e6ddb2a4b4b64bcc3230eb5d48d2c06b *vignettes/img/separation.png
-4abeeeef5d97e52dce12dfb5dfd4f2d6 *vignettes/img/tab_graph.png
+f6a33706db3f93749afc942abbc50721 *vignettes/img/tab_graph.png
 bfc79e36719e5f93e4a721f41bf033b9 *vignettes/img/tab_summary.png
-14d5140c78f5f109845b809bcf092f9e *vignettes/img/variable_false.png
-fde8eb72afb017a588569d12ad28fd33 *vignettes/img/variable_true.png
 62195376031696f0d84b52daf21803a2 *vignettes/template/ieee.csl

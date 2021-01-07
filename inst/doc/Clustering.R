@@ -40,7 +40,7 @@ library("Clustering")
 #  result <- Clustering::clustering(df = Clustering::basketball, min = 3, max=3,
 #            algorithm = c('gmm'), metrics = c('entropy','dunn'), attributes = T);
 #  
-#  sort(result,F,'entropy')
+#  sort(result,T,'entropy')
 
 ## ---- fig.align='center', echo=TRUE, eval=FALSE-------------------------------
 #  result[entropy > 0.11 & dunn > 0.11 & entropyAttr == 2]
