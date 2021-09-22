@@ -25,12 +25,12 @@ you want to use training and test \code{basketball} attributes.}
 
 \item{packages}{character vector with the packets running the algorithm.
 \code{NULL} The seven packages implemented are: cluster, ClusterR, advclust,
-amap, apcluster, gama, pvclust. \cr By default runs all packages.}
+amap, apcluster, pvclust. \cr By default runs all packages.}
 
 \item{algorithm}{character vector with the algorithms implemented within the
 package. \code{NULL} The algorithms implemented are: fuzzy_cm,fuzzy_gg,
 fuzzy_gk,hclust,apclusterK,agnes,clara,daisy, \cr diana,fanny,mona,pam,gmm,
-kmeans_arma,kmeans_rcpp,mini_kmeans,gama,\cr pvclust.}
+kmeans_arma,kmeans_rcpp,mini_kmeans,\cr pvclust.}
 
 \item{min}{An integer with the minimum number of clusters This data is
 necessary to indicate the minimum number of clusters when grouping the data.
@@ -104,26 +104,3 @@ which algorithm has the best behavior for the set of attributes as well as
 the most efficient number of clusters.
 }
 
-\examples{
-
-clustering(
-     df = cluster::agriculture,
-     min = 4,
-     max = 5,
-     algorithm='gmm',
-     metrics='precision',
-     attributes = TRUE
-)
-
-\dontrun{
-clustering(
-      df = Clustering::weather,
-      min = 2,
-      max = 3,
-      algorithm= c("gmm","kmeans_armaa"),
-      metrics= c("precision","dunn"),
-      attributes = FALSE
-)
-}
-
-}

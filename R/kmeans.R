@@ -19,6 +19,7 @@
 #'
 
 kmeans_rcpp_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -102,6 +103,7 @@ kmeans_rcpp_method = function(dt, clusters, columnClass, metric) {
 
 
 kmeans_arma_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -199,6 +201,7 @@ kmeans_arma_method = function(dt, clusters, columnClass, metric) {
 #'
 
 mini_kmeans_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

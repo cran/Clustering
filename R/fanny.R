@@ -19,6 +19,7 @@
 #'
 
 fanny_euclidean_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -109,6 +110,7 @@ fanny_euclidean_method = function(dt, clusters, columnClass, metric) {
 #'
 
 fanny_manhattan_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

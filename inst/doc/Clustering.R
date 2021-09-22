@@ -3,16 +3,6 @@ knitr::opts_chunk$set(echo = TRUE, fig.cap = "", fig.path = "Plot")
 library("Clustering")
 
 ## ---- fig.align='center', echo=TRUE, eval=FALSE-------------------------------
-#  install.packages("Clustering")
-
-## ---- fig.align='center', echo=TRUE, eval=FALSE-------------------------------
-#  devtools::install_github('laperez/Clustering')
-#  
-
-## ---- fig.align='center', echo=TRUE, eval=FALSE-------------------------------
-#  library("Clustering")
-
-## ---- fig.align='center', echo=TRUE, eval=FALSE-------------------------------
 #  
 #  result <- Clustering::clustering(df = basketball, min = 3, max = 5, algorithm = c('gmm',
 #                          'fanny'), metrics = c('entropy','dunn'), attributes = T)

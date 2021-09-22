@@ -19,6 +19,7 @@
 #'
 
 fuzzy_cm_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -104,6 +105,7 @@ fuzzy_cm_method = function(dt, clusters, columnClass, metric) {
 #'
 
 fuzzy_gg_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -188,6 +190,7 @@ fuzzy_gg_method = function(dt, clusters, columnClass, metric) {
 #'
 
 fuzzy_gk_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

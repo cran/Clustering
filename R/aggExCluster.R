@@ -17,6 +17,7 @@
 #' @keywords internal
 
 aggExCluster_euclidean = function(dt, clusters, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

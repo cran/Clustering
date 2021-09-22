@@ -17,6 +17,7 @@
 #'
 
 diana_euclidean_method = function(dt, clusters, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

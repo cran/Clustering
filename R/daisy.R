@@ -19,6 +19,7 @@
 #'
 
 daisy_euclidean_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -114,6 +115,7 @@ daisy_euclidean_method = function(dt, clusters, columnClass, metric) {
 #'
 
 daisy_manhattan_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -218,6 +220,7 @@ daisy_manhattan_method = function(dt, clusters, columnClass, metric) {
 #'
 
 daisy_gower_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

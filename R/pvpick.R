@@ -19,6 +19,7 @@
 #'
 
 pvpick_method = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

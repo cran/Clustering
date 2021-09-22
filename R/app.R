@@ -76,11 +76,11 @@ appClustering <- function() {
 #' you want to use training and test \code{basketball} attributes.
 #' @param packages character vector with the packets running the algorithm.
 #' \code{NULL} The seven packages implemented are: cluster, ClusterR, advclust,
-#' amap, apcluster, gama, pvclust. \cr By default runs all packages.
+#' amap, apcluster, pvclust. \cr By default runs all packages.
 #' @param algorithm character vector with the algorithms implemented within the
 #' package. \code{NULL} The algorithms implemented are: fuzzy_cm,fuzzy_gg,
 #' fuzzy_gk,hclust,apclusterK,agnes,clara,daisy, \cr diana,fanny,mona,pam,gmm,
-#' kmeans_arma,kmeans_rcpp,mini_kmeans,gama,\cr pvclust.
+#' kmeans_arma,kmeans_rcpp,mini_kmeans,\cr pvclust.
 #' @param min An integer with the minimum number of clusters This data is
 #' necessary to indicate the minimum number of clusters when grouping the data.
 #' The default value is \code{3}.
@@ -167,9 +167,6 @@ appClustering <- function() {
 #' pvclust pvclust pvpick
 #'
 #' @importFrom
-#' gama gama
-#'
-#' @importFrom
 #' amap hcluster
 #'
 #' @importFrom
@@ -213,15 +210,6 @@ appClustering <- function() {
 #'      attributes = TRUE
 #' )
 #'
-#'\dontrun{
-#' clustering(
-#'       df = Clustering::weather,
-#'       min = 2,
-#'       max = 3,
-#'       algorithm= c("gmm","kmeans_armaa"),
-#'       metrics= c("precision","dunn"),
-#'       attributes = FALSE
-#' )
 #' }
 #'
 
@@ -233,7 +221,10 @@ clustering <- function(path = NULL,
                        max = 4,
                        metrics = NULL,
                        attributes = FALSE) {
+
   ## Validation of input parameters
+
+  on.exit(options(scipen = 999))
 
   if (is.null(path) && is.null(df)) {
     stop("You must fill in at least one of the fields: path or df")
@@ -348,12 +339,12 @@ clustering <- function(path = NULL,
 #' @param df data matrix or data frame, or dissimilarity matrix, depending on
 #' the value of the argument.
 #' @param packages array defining the clustering package. The seven packages
-#' implemented are: cluster, ClusterR, advclust, amap, apcluster, gama, pvclust.
+#' implemented are: cluster, ClusterR, advclust, amap, apcluster, pvclust.
 #' By default runs all packages.
 #' @param algorithm array with the algorithms that implement the package.
 #' The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,hclust,apclusterK,
 #' agnes,clara,daisy,diana,fanny,mona,pam,gmm,kmeans_arma,kmeans_rcpp,
-#' mini_kmeans,gama,pvclust.
+#' mini_kmeans,pvclust.
 #' @param cluster_min minimum number of clusters. at least one must be.
 #' @param cluster_max maximum number of clusters. cluster_max must be greater or
 #' equal cluster_min.
@@ -380,9 +371,8 @@ execute_datasets <- function(path,
                              metrics,
                              attributes,
                              name_dataframe) {
-  # Initialization of the parameter format
 
-  on.exit(options(scipen = 999))
+  # Initialization of the parameter format
 
   formals(print.data.frame)$row.names <- F
 
@@ -512,7 +502,7 @@ execute_datasets <- function(path,
 #' @param algorithms_execute character vector with the algorithms to be
 #' executed. The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,hclust,
 #' apclusterK,agnes,clara,daisy,diana,fanny,mona,pam,gmm,kmeans_arma,
-#' kmeans_rcpp,mini_kmeans,gama,pvclust.
+#' kmeans_rcpp,mini_kmeans,pvclust.
 #' @param measures_execute character array with the measurements of
 #' dissimilarity to be executed. Depending on the algorithm, one or the other is
 #' implemented. Among them we highlight: Euclidena, Manhattan, etc.
@@ -1187,7 +1177,7 @@ print.clustering_sort <- function(x, ...) {
 #' result = clustering(
 #'                df = cluster::agriculture,
 #'                min = 4,
-#'                max = 5,
+#'                max = 6,
 #'                algorithm='gmm',
 #'                metrics=c("recall"),
 #'                attributes = FALSE
@@ -1195,9 +1185,6 @@ print.clustering_sort <- function(x, ...) {
 #'
 #' best_ranked_external_metrics(df = result)
 #'
-#' \dontrun{
-#' best_ranked_external_metrics(df = result$result)
-#' }
 #'
 
 best_ranked_external_metrics <- function(df) {
@@ -1249,9 +1236,6 @@ print.best_ranked_external_metrics <- function(x, ...)
 #'
 #' best_ranked_internal_metrics(df = result)
 #'
-#' \dontrun{
-#' best_ranked_internal_metrics(df = result$result)
-#' }
 #'
 
 best_ranked_internal_metrics <- function(df) {
@@ -1304,9 +1288,6 @@ print.best_ranked_internal_metrics <- function(x, ...)
 #'
 #' evaluate_validation_external_by_metrics(result)
 #'
-#' \dontrun{
-#' evaluate_validation_external_by_metrics(result$result)
-#' }
 #'
 
 evaluate_validation_external_by_metrics <- function(df) {
@@ -1360,9 +1341,6 @@ print.evaluate_validation_external_by_metrics <- function(x, ...)
 #'
 #' evaluate_validation_internal_by_metrics(result)
 #'
-#' \dontrun{
-#' evaluate_validation_internal_by_metrics(result$result)
-#' }
 #'
 
 evaluate_validation_internal_by_metrics <- function(df) {
@@ -1747,11 +1725,11 @@ plot_clustering <- function(df, metric) {
 #'
 #' @title Export result of external metrics in latex.
 #'
-#' @description Method that exports the results of internal measurements in
+#' @description Method that exports the results of external measurements in
 #' latex format to a file.
 #'
 #' @param df is a dataframe that contains as a parameter a table in latex format
-#' with the results of the internal validations.
+#' with the results of the external validations.
 #'
 #' @param path it's a string with the path to a directory where a file is to be
 #' stored in latex format.
@@ -1814,11 +1792,11 @@ export_file_external <- function(df, path = NULL) {
 #'
 #' @title Export result of internal metrics in latex.
 #'
-#' @description Method that exports the results of external measurements in
+#' @description Method that exports the results of internal measurements in
 #' latex format to a file.
 #'
 #' @param df is a dataframe that contains as a parameter a table in latex format
-#' with the results of the external validations.
+#' with the results of the internal validations.
 #'
 #' @param path it's a string with the path to a directory where a file is to be
 #' stored in latex format.

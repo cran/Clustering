@@ -17,6 +17,7 @@
 
 
 agnes_euclidean_method = function(dt, clusters, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -103,6 +104,7 @@ agnes_euclidean_method = function(dt, clusters, metric) {
 #'
 
 agnes_manhattan_method = function(dt, clusters, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

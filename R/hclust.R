@@ -1,4 +1,4 @@
-#' Method that runs the gama hcluster using the Euclidean metric to make an
+#' Method that runs the hclust using the Euclidean metric to make an
 #' external or internal validation of the cluster.
 #'
 #' @param dt matrix or data frame with the set of values to be applied to the
@@ -19,6 +19,7 @@
 #'
 
 hclust_euclidean = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))

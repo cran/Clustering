@@ -19,6 +19,7 @@
 #'
 
 apclusterK_euclidean = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -108,6 +109,7 @@ apclusterK_euclidean = function(dt, clusters, columnClass, metric) {
 #'
 
 apclusterK_manhattan = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
@@ -198,6 +200,7 @@ apclusterK_manhattan = function(dt, clusters, columnClass, metric) {
 #'
 
 apclusterK_minkowski = function(dt, clusters, columnClass, metric) {
+
   start.time <- Sys.time()
 
   if ('data.frame' %in% class(dt))
