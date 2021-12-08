@@ -1,40 +1,55 @@
-
-
+#'
 #' Method that returns the value or variable depending on where it is in the
-#' calculated metrics
+#' calculated metrics.
 #'
-#' @param algorith algorithm name
-#' @param distance name of the metric used to calculate the distance between
-#' points
-#' @param cluster number of clusters
-#' @param dataset name of dataset
-#' @param ranking position we want to obtain from the list of variables
-#' @param timeExternal array with the external validation calculation times of
-#' the clustering
-#' @param entropy array with the calculation of the entropy for each of the
-#' variables
-#' @param variation_information array with the calculation of the
-#' variation_information for each of the variables
-#' @param precision array with the calculation of the precision for each of the
-#' variables
-#' @param recall array with the calculation of the recall for each of the
-#' variables
-#' @param fowlkes_mallows_index array with the calculation of the
-#' fowlkes_mallows_index for each of the variables
-#' @param f_measure array with the calculation of the f_measure for each of the
-#' variables
-#' @param dunn array with the calculation of the dunn for each of the variables
-#' @param connectivity array with the calculation of the connectivity for each
-#' of the variables
-#' @param silhouette array with the calculation of the silhouette for each of
-#' the variables
-#' @param timeInternal array with the internal validation calculation times of
-#' the clustering
-#' @param variables true if we want to show the value of the metric calculation
-#' and false if we want to show the variable
+#' @param algorith Algorithm name.
 #'
-#' @return returns an array with the calculation of each metric based on the
-#' indicated position
+#' @param distance Name of the metric used to calculate the distance between
+#' points.
+#'
+#' @param cluster Number of clusters.
+#'
+#' @param dataset Name of dataset.
+#'
+#' @param ranking Position we want to obtain from the list of variables.
+#'
+#' @param timeExternal Array with the external validation calculation times of
+#' the clustering.
+#'
+#' @param entropy Array with the calculation of the entropy for each of the
+#' variables.
+#'
+#' @param variation_information Array with the calculation of the
+#' variation_information for each of the variables.
+#'
+#' @param precision Array with the calculation of the precision for each of the
+#' variables.
+#'
+#' @param recall Array with the calculation of the recall for each of the
+#' variables.
+#'
+#' @param fowlkes_mallows_index Array with the calculation of the
+#' fowlkes_mallows_index for each of the variables.
+#'
+#' @param f_measure Array with the calculation of the f_measure for each of the
+#' variables.
+#'
+#' @param dunn Array with the calculation of the dunn for each of the variables.
+#'
+#' @param connectivity Array with the calculation of the connectivity for each
+#' of the variables.
+#'
+#' @param silhouette Array with the calculation of the silhouette for each of
+#' the variables.
+#'
+#' @param timeInternal Array with the internal validation calculation times of
+#' the clustering.
+#'
+#' @param variables True if we want to show the value of the metric calculation
+#' and false if we want to show the variable.
+#'
+#' @return Returns an array with the calculation of each metric based on the
+#' indicated position.
 #'
 #' @keywords internal
 #'
@@ -52,11 +67,12 @@ calculate_result <-
            recall,
            fowlkes_mallows_index,
            f_measure,
+           timeInternal,
            dunn,
            connectivity,
            silhouette,
-           timeInternal,
            variables) {
+
     resultadoValores = list()
 
     if (variables) {
@@ -252,7 +268,8 @@ calculate_result <-
         NULL
     }
 
-
+    if (is.null(sort_silhouette) && is.null(sort_dunn) && is.null(sort_connectivity)) sort_timeInternal <- NULL
+    if (is.null(sort_entropy) && is.null(sort_variation_information) && is.null(sort_precision) && is.null(sort_recall) && is.null(sort_f_measure) && is.null(sort_fowlkes_mallows_index)) sort_timeExternal <- NULL
 
     resultadoValores$algorith = algorith
     resultadoValores$distance = distance
@@ -302,6 +319,12 @@ calculate_result <-
     else resultadoValores$fowlkes_mallows_index =
       format(round(as.numeric(sort_fowlkes_mallows_index[ranking]),
                    digits = 4),scientific = F)
+    if (!is.null(sort_timeInternal))
+      if (variables)  resultadoValores$timeInternal =
+      match(ranking, sort_timeInternal)
+    else resultadoValores$timeInternal =
+      format(round(as.numeric(sort_timeInternal[ranking]),
+                   digits = 4),scientific = F)
     if (!is.null(sort_connectivity))
       if (variables)  resultadoValores$connectivity = sort_connectivity[ranking]
     else resultadoValores$connectivity =
@@ -316,34 +339,32 @@ calculate_result <-
     else resultadoValores$silhouette =
       format(round(as.numeric(sort_silhouette[ranking]), digits = 4),
              scientific = F)
-    if (!is.null(sort_timeInternal))
-      if (variables)  resultadoValores$timeInternal =
-      match(ranking, sort_timeInternal)
-    else resultadoValores$timeInternal =
-      format(round(as.numeric(sort_timeInternal[ranking]),
-                   digits = 4),scientific = F)
 
     return (resultadoValores)
 
   }
 
-#' Method that calculates the best rated external metrics
 #'
-#' @param df  data matrix or data frame
+#' Method that calculates the best rated external metrics.
 #'
-#' @return returns a table with the external metrics that has the best rating
+#' @param df Data matrix or data frame.
+#'
+#' @return Return a table with the external metrics that has the best rating.
 #'
 #' @keywords internal
 #'
 
 calculate_best_external_variables_by_metrics <- function (df) {
+
+  df <- transform_dataset(df)
+
   table_res <- data.table(df)
 
   fields <-
     paste(row_name_df_external(colnames(table_res)), collapse = ",")
 
   query <-
-    paste("select", fields, "from table_res where Ranking=1", collapse = "")
+    paste("select", fields, "from table_res where Var=1", collapse = "")
 
   calculate_by_metrics <-
     sqldf(query)
@@ -352,23 +373,27 @@ calculate_best_external_variables_by_metrics <- function (df) {
   return (calculate_by_metrics)
 }
 
-#' Method that calculates the best rated internal metrics
 #'
-#' @param df  data matrix or data frame
+#' Method that calculates the best rated internal metrics.
 #'
-#' @return returns a table with the internal metrics that has the best rating
+#' @param df Data matrix or data frame.
+#'
+#' @return Return a table with the internal metrics that has the best rating.
 #'
 #' @keywords internal
 #'
 
 calculate_best_internal_variables_by_metrics <- function (df) {
+
+  df <- transform_dataset_internal(df)
+
   table_res <- data.table(df)
 
   fields <-
     paste(row_name_df_internal(colnames(table_res)), collapse = ",")
 
   query <-
-    paste("select", fields, "from table_res where Ranking=1", collapse = "")
+    paste("select", fields, "from table_res where Var=1", collapse = "")
 
   calculate_by_metrics <-
     sqldf(query)
@@ -377,18 +402,21 @@ calculate_best_internal_variables_by_metrics <- function (df) {
   return (calculate_by_metrics)
 }
 
-#' Method that calculates which algorithm behaves best for the datasets provided
 #'
-#' @param df data matrix or data frame
+#' Method that calculates which algorithm behaves best for the datasets provided.
 #'
-#' @return returns a table with the best performing algorithm for the provided
-#' datasets
+#' @param df Data matrix or data frame.
+#'
+#' @return Return a table with the best performing algorithm for the provided
+#' datasets.
 #'
 #' @keywords internal
 #'
 
 calculate_validation_external_by_metrics <-
   function (df) {
+
+    df <- transform_dataset(df)
 
     table_res <- data.table(df)
 
@@ -420,19 +448,25 @@ calculate_validation_external_by_metrics <-
 
   }
 
+#'
 #' Method that calculates which algorithm and which metric behaves best for the
-#' datasets provided
+#' datasets provided.
 #'
-#' @param df data matrix or data frame
+#' @param df Data matrix or data frame.
 #'
-#' @return returns a table with the algorithm and the best performing metric for
-#' the datasets
+#' @param metric String with the metric.
+#'
+#' @return Return a table with the algorithm and the best performing metric for
+#' the datasets.
 #'
 #' @keywords internal
 #'
 
 calculate_best_validation_external_by_metrics <-
-  function (df) {
+  function (df,metric) {
+
+    df <- transform_dataset(df)
+
     table_res <- data.table(df)
 
     fields <-
@@ -443,13 +477,12 @@ calculate_best_validation_external_by_metrics <-
     query_fields <- "";
 
     for (i in 6:length(metrics_external)){
-      query_fields <- paste(query_fields,", MAX(",metrics_external[i],") as ",
-                            metrics_external[i],sep = "")
+      query_fields <- paste(query_fields,metrics_external[i],sep = ", ")
     }
 
     query <-
-      paste("select Algorithm,Distance ", query_fields, "from table_res group
-            by Algorithm, Distance", collapse = "")
+      paste("select Algorithm,Distance,Clusters", query_fields, "from table_res group by
+            Algorithm, Distance HAVING ",metric," = MAX(",metric,")", collapse = "")
 
     calculate_best_external_by_metrics <-
       sqldf(
@@ -459,18 +492,22 @@ calculate_best_validation_external_by_metrics <-
     return (calculate_best_external_by_metrics)
   }
 
-#' Method that calculates which algorithm behaves best for the datasets provided
 #'
-#' @param df data matrix or data frame
+#' Method that calculates which algorithm behaves best for the datasets provided.
 #'
-#' @return returns a table with the best performing algorithm for the provided
-#' datasets
+#' @param df Data matrix or data frame.
+#'
+#' @return Return a table with the best performing algorithm for the provided
+#' datasets.
 #'
 #' @keywords internal
 #'
 
 calculate_validation_internal_by_metrics <-
   function (df) {
+
+    df <- transform_dataset_internal(df)
+
     table_res <- data.table(df)
 
     fields <-
@@ -500,19 +537,25 @@ calculate_validation_internal_by_metrics <-
 
   }
 
+#'
 #' Method that calculates which algorithm and which metric behaves best for the
-#' datasets provided
+#' datasets provided.
 #'
-#' @param df data matrix or data frame
+#' @param df Data matrix or data frame.
 #'
-#' @return returns a table with the algorithm and the best performing metric for
-#' the datasets
+#' @param metric String with the metric.
+#'
+#' @return Return a table with the algorithm and the best performing metric for
+#' the datasets.
 #'
 #' @keywords internal
 #'
 
 calculate_best_validation_internal_by_metrics <-
-  function (df) {
+  function (df, metric) {
+
+    df <- transform_dataset_internal(df)
+
     table_res <- data.table(df)
 
     fields <-
@@ -523,13 +566,12 @@ calculate_best_validation_internal_by_metrics <-
     query_fields <- "";
 
     for (i in 6:length(metrics_internal)){
-      query_fields <- paste(query_fields,", MAX(",metrics_internal[i],") as ",
-                            metrics_internal[i],sep = "")
+      query_fields <- paste(query_fields,metrics_internal[i],sep = ", ")
     }
 
     query <-
-      paste("select Algorithm,Distance ", query_fields, "from table_res group by
-            Algorithm, Distance", collapse = "")
+      paste("select Algorithm,Distance,Clusters ", query_fields, "from table_res group by
+            Algorithm, Distance HAVING ",metric," = MAX(",metric,")", collapse = "")
 
     calculate_best_internal_by_metrics <-
       sqldf(
@@ -542,19 +584,22 @@ calculate_best_validation_internal_by_metrics <-
 
   }
 
+#'
 #' Method in charge of obtaining a table with the results of the algorithms
-#' grouped by clusters,
-#' calculating the maximum value of each external metrics
+#' grouped by clusters, calculating the maximum value of each external metrics.
 #'
-#' @param df data matrix or data frame
+#' @param df Data matrix or data frame.
 #'
-#' @return returns a table with the algorithms and the clusters
+#' @return Return a table with the algorithms and the clusters.
 #'
 #' @keywords internal
 #'
 
 show_result_external_algorithm_group_by_clustering <-
     function (df) {
+
+      df <- transform_dataset(df)
+
       table_res <- data.table(df)
 
       fields <-
@@ -582,18 +627,22 @@ show_result_external_algorithm_group_by_clustering <-
     }
 
 
+#'
 #' Method in charge of obtaining a table with the results of the algorithms
-#' grouped by clusters, calculating the maximum value of each internal metrics
+#' grouped by clusters, calculating the maximum value of each internal metrics.
 #'
-#' @param df data matrix or data frame
+#' @param df Data matrix or data frame.
 #'
-#' @return returns a table with the algorithms and the clusters
+#' @return Return a table with the algorithms and the clusters.
 #'
 #' @keywords internal
 #'
 
 show_result_internal_algorithm_group_by_clustering <-
   function (df) {
+
+    df <- transform_dataset_internal(df)
+
     table_res <- data.table(df)
 
     fields <-
@@ -621,20 +670,25 @@ show_result_internal_algorithm_group_by_clustering <-
   }
 
 
+#'
 #' Method that returns a table with the algorithm and the metric indicated as
-#' parameters
+#' parameters.
 #'
-#' @param df data matrix or data frame
-#' @param algorithm on which we will calculate the results
+#' @param df Data matrix or data frame.
 #'
-#' @return returns a table with the algorithm and the metric indicated as
-#' parameter
+#' @param metric String with the metric.
+#'
+#' @return Return a table with the algorithm and the metric indicated as
+#' parameter.
 #'
 #' @keywords internal
 #'
 
 show_result_external_algorithm_by_metric <-
-  function(df, algorithm) {
+  function(df, metric) {
+
+    df <- transform_dataset(df)
+
     table_res <- data.table(df)
 
     fields <-
@@ -645,15 +699,11 @@ show_result_external_algorithm_by_metric <-
     query_fields <- "";
 
     for (i in 6:length(metrics_external)){
-      query_fields <- paste(query_fields,", MAX(",metrics_external[i],") as ",
-                            metrics_external[i],sep = "")
+      query_fields <- paste(query_fields,metrics_external[i],sep = ", ")
     }
 
     query <-
-      paste("select Algorithm,Clusters ", query_fields, " from table_res where
-            UPPER(Algorithm) LIKE UPPER('",
-            algorithm,
-            "') group by Algorithm, Clusters", collapse = "", sep = "")
+      paste("select Algorithm, Distance, Clusters ", query_fields, " from table_res group by Algorithm HAVING ",metric," = MAX(",metric,")", collapse = "", sep = "")
 
     show_result_external_by_metrics <- sqldf(query)
 
@@ -661,17 +711,25 @@ show_result_external_algorithm_by_metric <-
 
   }
 
-#' Method that return max value of metric
 #'
-#' @param df data matrix or data frame
-#' @param metric metric to evaluate
+#' Method that return max value of metric.
 #'
-#' @return a value with maximum column
+#' @param df Data matrix or data frame.
+#'
+#' @param metric Metric to evaluate.
+#'
+#' @return A value with maximum column.
 #'
 #' @keywords internal
 #'
 
-max_value_metric <- function(df,metric) {
+max_value_metric <- function(df,metric,isExternalMetric) {
+
+  if (isExternalMetric) {
+    df <- transform_dataset(df)
+  } else {
+    df <- transform_dataset_internal(df)
+  }
 
   table_res <- data.table(df)
 
@@ -682,20 +740,25 @@ max_value_metric <- function(df,metric) {
 
 }
 
+#'
 #' Method that returns a table with the algorithm and the metric indicated as
-#' parameters
+#' parameters.
 #'
-#' @param df data matrix or data frame
-#' @param algorithm on which we will calculate the results
+#' @param df Data matrix or data frame.
 #'
-#' @return returns a table with the algorithm and the metric indicated as
-#' parameter
+#' @param metric An which we will calculate the results.
+#'
+#' @return Return a table with the algorithm and the metric indicated as
+#' parameter.
 #'
 #' @keywords internal
 #'
 
 show_result_internal_algorithm_by_metric <-
-  function(df, algorithm) {
+  function(df, metric) {
+
+    df <- transform_dataset_internal(df)
+
     table_res <- data.table(df)
 
     fields <-
@@ -706,15 +769,11 @@ show_result_internal_algorithm_by_metric <-
     query_fields <- "";
 
     for (i in 6:length(metrics_internal)){
-      query_fields <- paste(query_fields,", MAX(",metrics_internal[i],") as ",
-                            metrics_internal[i],sep = "")
+      query_fields <- paste(query_fields,metrics_internal[i],sep = ", ")
     }
 
     query <-
-      paste("select Algorithm,Clusters ", query_fields, " from table_res where
-            UPPER(Algorithm) LIKE UPPER('",
-            algorithm,
-            "') group by Algorithm, Clusters", collapse = "", sep = "")
+      paste("select Algorithm, Distance, Clusters ", query_fields, " from table_res group by Algorithm HAVING ",metric," = MAX(",metric,")", collapse = "", sep = "")
 
     show_result_internal_by_metrics <- sqldf(query)
 

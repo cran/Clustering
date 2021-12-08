@@ -1,16 +1,19 @@
-#' Method that runs the agnes algorithm using the euclidean metric to make an
-#' external or internal validation of the cluster.
 #'
-#' @param dt matrix or data frame with the set of values to be applied to the
+#' Method that runs the agnes algorithm using the Euclidean metric to
+#' make an external or internal validation of the cluster.
+#'
+#' @param dt Matrix or data frame with the set of values to be applied to the
 #' algorithm.
-#' @param clusters is an integer that indexes the number of clusters we want to
-#' create.
-#' @param metric is a characters vector with the metrics avalaible in the
-#' package. The metrics implemented are: entropy, variation_information,
-#' precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,
-#' silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the
+#' @param clusters It's an integer that indexes the number of clusters we want to
+#' create.
+#'
+#' @param metric It's a characters vector with the metrics avalaible in the
+#' package. The metrics implemented are: Entropy, Variation_information,
+#' Precision,Recall,F_measure,Fowlkes_mallows_index,Connectivity,Dunn,
+#' Silhouette.
+#'
+#' @return Return a list with both the internal and external evaluation of the
 #' grouping.
 #'
 #' @keywords internal
@@ -19,6 +22,8 @@
 agnes_euclidean_method = function(dt, clusters, metric) {
 
   start.time <- Sys.time()
+
+  on.exit(options(warn = -1))
 
   if ('data.frame' %in% class(dt))
     dt = as.matrix(dt)
@@ -106,6 +111,8 @@ agnes_euclidean_method = function(dt, clusters, metric) {
 agnes_manhattan_method = function(dt, clusters, metric) {
 
   start.time <- Sys.time()
+
+  on.exit(options(warn = -1))
 
   if ('data.frame' %in% class(dt))
     dt = as.matrix(dt)

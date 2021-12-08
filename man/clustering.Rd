@@ -11,14 +11,13 @@ clustering(
   algorithm = NULL,
   min = 3,
   max = 4,
-  metrics = NULL,
-  attributes = FALSE
+  metrics = NULL
 )
 }
 \arguments{
 \item{path}{The path of file. \code{NULL} It is only allowed to use path or
 df but not both at the same time. Only files in .dat, .csv or arff format are
- allowed.}
+allowed.}
 
 \item{df}{data matrix or data frame, or dissimilarity matrix. \code{NULL} If
 you want to use training and test \code{basketball} attributes.}
@@ -42,16 +41,12 @@ The default value is \code{4}.}
 
 \item{metrics}{Character vector with the metrics implemented to evaluate the
 distribution of the data in clusters. \code{NULL} The night metrics
-implemented are: entropy, variation_information,\cr
-precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,silhouette.}
-
-\item{attributes}{an boolean which indicates that if we want to show as a
-result the attributes of the datasets or the numerical value of the
-calculation of the metrics. The default value is \code{F}.}
+implemented are: Entropy, Variation_information,\cr
+Precision,Recall,F_measure,Fowlkes_mallows_index,Connectivity,Dunn and Silhouette.}
 }
 \value{
-a matrix with the result of running all the metrics of the algorithms
-contained in the packages we indicated. We also obtain information with the
+A matrix with the result of running all the metrics of the algorithms
+contained in the packages indicated. We also obtain information with the
 types of metrics, algorithms and packages executed.
 
 \itemize{
@@ -76,31 +71,24 @@ packages based on evaluation metrics.
 }
 \details{
 The operation of this algorithm is to evaluate how the attributes of
-a dataset or a set of datasets behave in different grouping algorithms. To do
+a dataset or a set of datasets behave in different clustering algorithms. To do
 this, it is necessary to indicate the type of evaluation you want to make on
-the
-distribution of the data. To be able to execute the algorithm it is necessary
-to indicate the number of clusters
-\code{min} and \code{max}, the algorithms \code{algorithm} or packages
-\code{packages} that we want to cluster,
-the metrics \code{metrics} and if we want that the results of evaluation are
-the own classified attributes or numerical values \code{attributes}.
+the distribution of the data. To be able to execute the algorithm it is necessary
+to indicate the number of clusters.
+
+\code{min} and \code{max}, the algorithms \code{algorithm} or packages#'
+\code{packages} that we want to cluster and the metrics \code{metrics}.
 }
-\section{How does this algorithm work?}{
+\examples{
 
-This algorithm improves and complements existing implementations of
-clustering algorithms.
+clustering(
+     df = cluster::agriculture,
+     min = 3,
+     max = 3,
+     algorithm='clara',
+     metrics=c('Precision')
+)
 
-The approaches that exist, are many algorithms that run parallel to the
-algorithms, without being able to be compared between them. In addition, it
-was necessary to indicate which variable of the dataset is required to be
-executed.
-In addition, depending on the package there are some implementations or
-others to evaluate the groupings of data, so it is sometimes complicated to
-compare the groupings between different packages.
 
-With this algorithm we can solve the problems mentioned above and determine
-which algorithm has the best behavior for the set of attributes as well as
-the most efficient number of clusters.
+
 }
-

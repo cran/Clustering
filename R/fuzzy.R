@@ -1,18 +1,19 @@
-#' Method that runs the fuzzy.CM algorithm using the Euclidean metric to make an
-#' external or internal validation of the cluster.
 #'
-#' @param dt matrix or data frame with the set of values to be applied to the
+#' Method that runs the fuzzy_cm algorithm using the Euclidean metric to
+#' make an external or internal validation of the cluster.
+#'
+#' @param dt Matrix or data frame with the set of values to be applied to the
 #' algorithm.
-#' @param clusters is an integer that indexes the number of clusters we want to
-#' create.
-#' @param columnClass is an integer with the number of columns, for example if a
-#' dataset has five column, we can select column four to calculate validation.
-#' @param metric is a characters vector with the metrics avalaible in the
-#' package. The metrics implemented are: entropy, variation_information,
-#' precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,
-#' silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the
+#' @param clusters It's an integer that indexes the number of clusters we want to
+#' create.
+#'
+#' @param metric It's a characters vector with the metrics avalaible in the
+#' package. The metrics implemented are: Entropy, Variation_information,
+#' Precision,Recall,F_measure,Fowlkes_mallows_index,Connectivity,Dunn,
+#' Silhouette.
+#'
+#' @return Return a list with both the internal and external evaluation of the
 #' grouping.
 #'
 #' @keywords internal
@@ -21,6 +22,8 @@
 fuzzy_cm_method = function(dt, clusters, columnClass, metric) {
 
   start.time <- Sys.time()
+
+  on.exit(options(warn = -1))
 
   if ('data.frame' %in% class(dt))
     dt = as.matrix(dt)
@@ -84,21 +87,22 @@ fuzzy_cm_method = function(dt, clusters, columnClass, metric) {
   return (result)
 }
 
-#' Method that runs the fuzzy.GG algorithm using the Euclidean metric to make an
-#' external or internal validation of the cluster.
 #'
-#' @param dt matrix or data frame with the set of values to be applied to the
+#' Method that runs the fuzzy_gg algorithm using the Euclidean metric to
+#' make an external or internal validation of the cluster.
+#'
+#' @param dt Matrix or data frame with the set of values to be applied to the
 #' algorithm.
-#' @param clusters is an integer that indexes the number of clusters we want to
-#' create.
-#' @param columnClass is an integer with the number of columns, for example if a
-#' dataset has five column, we can select column four to calculate validation.
-#' @param metric is a characters vector with the metrics avalaible in the
-#' package. The metrics implemented are: entropy, variation_information,
-#' precision,recall,f_measure,fowlkes_mallows_index,connectivity,dunn,
-#' silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the
+#' @param clusters It's an integer that indexes the number of clusters we want to
+#' create.
+#'
+#' @param metric It's a characters vector with the metrics avalaible in the
+#' package. The metrics implemented are: Entropy, Variation_information,
+#' Precision,Recall,F_measure,Fowlkes_mallows_index,Connectivity,Dunn,
+#' Silhouette.
+#'
+#' @return Return a list with both the internal and external evaluation of the
 #' grouping.
 #'
 #' @keywords internal
@@ -107,6 +111,8 @@ fuzzy_cm_method = function(dt, clusters, columnClass, metric) {
 fuzzy_gg_method = function(dt, clusters, columnClass, metric) {
 
   start.time <- Sys.time()
+
+  on.exit(options(warn = -1))
 
   if ('data.frame' %in% class(dt))
     dt = as.matrix(dt)
@@ -170,20 +176,22 @@ fuzzy_gg_method = function(dt, clusters, columnClass, metric) {
   return (result)
 }
 
-#' Method that runs the fuzzy.GK algorithm using the Euclidean metric to make an
-#' external or internal validation of the cluster.
 #'
-#' @param dt matrix or data frame with the set of values to be applied to the
+#' Method that runs the fuzzy_gk algorithm using the Euclidean metric to
+#' make an external or internal validation of the cluster.
+#'
+#' @param dt Matrix or data frame with the set of values to be applied to the
 #' algorithm.
-#' @param clusters is an integer that indexes the number of clusters we want to
-#' create.
-#' @param columnClass is an integer with the number of columns, for example if a
-#' dataset has five column, we can select column four to calculate validation.
-#' @param metric metrics avalaible in the package. The metrics implemented are:
-#' entropy, variation_information,precision,recall,f_measure,
-#' fowlkes_mallows_index,connectivity,dunn,silhouette.
 #'
-#' @return returns a list with both the internal and external evaluation of the
+#' @param clusters It's an integer that indexes the number of clusters we want to
+#' create.
+#'
+#' @param metric It's a characters vector with the metrics avalaible in the
+#' package. The metrics implemented are: Entropy, Variation_information,
+#' Precision,Recall,F_measure,Fowlkes_mallows_index,Connectivity,Dunn,
+#' Silhouette.
+#'
+#' @return Return a list with both the internal and external evaluation of the
 #' grouping.
 #'
 #' @keywords internal
@@ -192,6 +200,8 @@ fuzzy_gg_method = function(dt, clusters, columnClass, metric) {
 fuzzy_gk_method = function(dt, clusters, columnClass, metric) {
 
   start.time <- Sys.time()
+
+  on.exit(options(warn = -1))
 
   if ('data.frame' %in% class(dt))
     dt = as.matrix(dt)
