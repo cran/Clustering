@@ -1,10 +1,10 @@
-df80b22bf6e47df9c80123096aa5c2d6 *DESCRIPTION
+65fb1737a5c9a355d72e3fd35ac0a7de *DESCRIPTION
 95baaca9858092e063cf402df3f53ca2 *NAMESPACE
 fa101cfc0af1ddb1413d2ebc7f3e37f1 *R/aggExCluster.R
 0d6769112ce14f49f55ae4fb451a7526 *R/agnes.R
 d4a9002a3689140939dc5ecc2bfbc52f *R/algorithm.R
 304764e15e792141e32db49f3d46810a *R/apcluster.R
-3c4a13184458f3485e577dcf064017f3 *R/app.R
+1ab507d28c8a7cc544ddd5560a77f2c0 *R/app.R
 5910a7640b1eba4e5a0187d0de92c390 *R/basketball-data.R
 c99daef70043be40bff5dac1e1db3e85 *R/bolts-data.R
 3b9127884b8049150b16b1abdb40cfff *R/clara.R
@@ -27,14 +27,14 @@ dc14ffe45d1d9cd9f381c0e440e7db8b *R/pam.R
 f04ceb455f642b7a9cfa1c877916716e *R/stock-data.R
 f399e1660ea537d37563fc105b243e5d *R/stulong-data.R
 7ee86654d5433b05debd0379556735f3 *R/utils.R
-4f8ffc183d6595ab88bda973f390bb1d *R/validation.R
+078153131a4e9ec0cc685711a11eaa2c *R/validation.R
 a423d3da19aed8f198b6f61f6d04ee05 *R/weather-data.R
 ed488761b82821585a5b8fc8535c3911 *data/basketball.rda
 54a7bdb61472cee03cdddcea2939f972 *data/bolts.rda
 1f0d95939ff37a1c41f06892dd447155 *data/stock.rda
 082681f117d62fdb7bb0a835b3055586 *data/stulong.rda
 46f367e9971a0486e7aefecdfc786a0f *data/weather.rda
-9d62c793018071cff343f7a677a8c027 *inst/shiny/clustering/server.R
+84d3e4270b2c89b0436a5e2194909a8e *inst/shiny/clustering/server.R
 e4a76b675fb6a3cdb233738555ee43c5 *inst/shiny/clustering/ui.R
 b50ce105bc63a7143e0da7aeb167c71d *inst/shiny/clustering/www/myjs.js
 1a276eebe33fedf2143a1243c3b18577 *inst/shiny/clustering/www/style.css
@@ -162,4 +162,4 @@ f83eb3b6ec781beacd647f5d51e0c4ec *man/stulong.Rd
 692f06e5686eaa96d3048fea16d6cd99 *man/transform_dataset_internal.Rd
 8306a3c9eb80ef170e57a49c49d891c6 *man/variation_information_metric.Rd
 d04fdb84c44e71b83f5dada7ae8a993a *man/weather.Rd
-fcd3dbb83cf329f0c9bdae32bc5fc36e *tests/testthat/test-clustering.R
+4c637c5760aac39e52ee4e26affdeec7 *tests/testthat/test-clustering.R
