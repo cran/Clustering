@@ -18,6 +18,7 @@
 #' @importFrom
 #' utils install.packages
 #'
+#'
 #' @export
 #' appClustering
 #'
@@ -184,6 +185,9 @@ appClustering <- function() {
 #'
 #' @import
 #' toOrdinal
+#'
+#' @import
+#' methods
 #'
 #' @export
 #' clustering
@@ -546,7 +550,7 @@ execute_package_parallel <-
     # We start the process of creating clusters to perform parallel runs.
 
     cl <-
-      parallel::makeCluster(availableCores() - 1,
+      parallel::makeCluster(availableCores(omit = 1),
                             timeout = 60,
                             setup_strategy = "sequential")
     registerDoParallel(cl)
