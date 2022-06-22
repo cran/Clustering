@@ -66,6 +66,22 @@ fill_cluster_vector = function(data, appcluster) {
 
 }
 
+fill_cluster = function(data, clusters) {
+  cluster_vector = array(dim = nrow(data))
+  for (iterator_row in 1:length(clusters)) {
+    for (iterator_col in 1:length(clusters[[iterator_row]])) {
+      array_cluster = clusters[[iterator_row]]
+      pos = array_cluster[iterator_col]
+
+      cluster_vector[[pos]] = iterator_row
+
+    }
+  }
+
+  return (cluster_vector)
+
+}
+
 #' Method in charge of detecting the limit of a dataset header.
 #'
 #' @param path of the dataset
@@ -118,7 +134,7 @@ number_variables_dataset <- function(path) {
             file = files[pos],
             header = CONST_FALSE,
             comment.char = '@',
-            stringsAsFactors = F,
+            stringsAsFactors = FALSE,
             encoding = "UTF-8"
           )
         )
@@ -166,9 +182,9 @@ read_file <- function(path) {
       file = path,
       header = CONST_FALSE,
       comment.char = '@',
-      stringsAsFactors = F,
+      stringsAsFactors = FALSE,
       encoding = "UTF-8",
-      strip.white = T
+      strip.white = TRUE
     ))
   }
 
@@ -188,7 +204,7 @@ read_file <- function(path) {
 #'@keywords internal
 #'
 
-dataframe_by_metrics_evaluation <- function(data, external = T) {
+dataframe_by_metrics_evaluation <- function(data, external = TRUE) {
 
   if (external) {
     data <- transform_dataset(data)

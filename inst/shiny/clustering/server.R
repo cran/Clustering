@@ -108,8 +108,8 @@ shinyServer(function(input, output, session) {
     # Reactive event to manage the algorithm combo, that is, if we select an algorithm through this
     # event we will select the package that contains that algorithm.
     observeEvent(
-        ignoreNULL = F,
-        ignoreInit = T,
+        ignoreNULL = FALSE,
+        ignoreInit = TRUE,
         eventExpr = {
             input$algorithm
         },
@@ -130,9 +130,6 @@ shinyServer(function(input, output, session) {
                         "diana",
                         "fanny",
                         "gmm",
-                        "fuzzy_cm",
-                        "fuzzy_gg",
-                        "fuzzy_gk",
                         "hclust",
                         "kmeans_arma",
                         "kmeans_rcpp",
@@ -142,8 +139,6 @@ shinyServer(function(input, output, session) {
                         "pvclust"
                     )
 
-                advclust_algorithm <-
-                    c("fuzzy_cm", "fuzzy_gg", "fuzzy_gk")
                 amap_algorithm <- c("hclust")
                 apcluster_algorithm <- c("apclusterK")
                 clusterr_algorithm <-
@@ -164,7 +159,6 @@ shinyServer(function(input, output, session) {
 
                 '%notin%' <- Negate('%in%')
 
-                countAlgorithmAdvclust <- 0
                 countAlgorithmAmap <- 0
                 countAlgorithmApcluster <- 0
                 countAlgorithmCluster <- 0
@@ -173,9 +167,6 @@ shinyServer(function(input, output, session) {
 
                 for (a in 1:length(algorithm_clustering)) {
                     if (algorithm_clustering[a] %notin% input$algorithm) {
-                        if (algorithm_clustering[a] %in% advclust_algorithm) {
-                            countAlgorithmAdvclust <- countAlgorithmAdvclust + 1
-                        }
 
                         if (algorithm_clustering[a] %in% amap_algorithm) {
                             countAlgorithmAmap <- countAlgorithmAmap + 1
@@ -199,10 +190,6 @@ shinyServer(function(input, output, session) {
                     }
                 }
 
-                if (countAlgorithmAdvclust == length(advclust_algorithm)) {
-                    selectedPackage = selectedPackage[selectedPackage != 'advclust']
-                }
-
                 if (countAlgorithmAmap == length(amap_algorithm)) {
                     selectedPackage = selectedPackage[selectedPackage != 'amap']
                 }
@@ -224,15 +211,6 @@ shinyServer(function(input, output, session) {
                 }
 
                 for (a in 1:length(input$algorithm)) {
-                    if (input$algorithm[a] %in% advclust_algorithm) {
-                        if (!is.null(input$packages)) {
-                            if ("advclust" %notin% input$packages) {
-                                selectedPackage = c(selectedPackage, "advclust")
-                            }
-                        } else {
-                            selectedPackage = c(selectedPackage, "advclust")
-                        }
-                    }
 
                     if (input$algorithm[a] %in% amap_algorithm) {
                         if (!is.null(input$packages)) {
@@ -304,8 +282,8 @@ shinyServer(function(input, output, session) {
     # Event that manages the package component. Each vex that selects a bundle will mark
     # the algorithms corresponding to the bundle.
     observeEvent(
-        ignoreNULL = F,
-        ignoreInit = T,
+        ignoreNULL = FALSE,
+        ignoreInit = TRUE,
         eventExpr = {
             input$packages
         },
@@ -317,8 +295,6 @@ shinyServer(function(input, output, session) {
                     selectedAlgorithm = c(input$algorithm)
                 }
 
-                advclust_algorithm <-
-                    c("fuzzy_cm", "fuzzy_gg", "fuzzy_gk")
                 amap_algorithm <- c("hclust")
                 apcluster_algorithm <- c("apclusterK")
                 clusterr_algorithm <-
@@ -339,7 +315,6 @@ shinyServer(function(input, output, session) {
                 '%notin%' <- Negate('%in%')
                 packages_clustering <-
                     c(
-                        "advclust",
                         "amap",
                         "apcluster",
                         "clusterr",
@@ -350,14 +325,7 @@ shinyServer(function(input, output, session) {
                 #' Limpiamos aquellos algoritmos que no está en el paquete indicado.
                 for (p in 1:length(packages_clustering)) {
                     if (packages_clustering[p] %notin% input$packages) {
-                        if (tolower(packages_clustering[p]) == tolower("advclust")) {
-                            for (alg in 1:length(advclust_algorithm)) {
-                                if (advclust_algorithm[alg] %in% input$algorithm) {
-                                    selectedAlgorithm <-
-                                        selectedAlgorithm[selectedAlgorithm != advclust_algorithm[alg]]
-                                }
-                            }
-                        }
+
                         if (tolower(packages_clustering[p]) == tolower("amap")) {
                             for (alg in 1:length(amap_algorithm)) {
                                 if (amap_algorithm[alg] %in% input$algorithm) {
@@ -402,19 +370,6 @@ shinyServer(function(input, output, session) {
                 }
 
                 for (n in 1:length(input$packages)) {
-                    if (tolower(input$packages[n]) == tolower("advclust")) {
-                        if (length(input$algorithm) > 0) {
-                            for (alg in 1:length(advclust_algorithm)) {
-                                if (advclust_algorithm[alg] %notin% input$algorithm) {
-                                    selectedAlgorithm <- c(selectedAlgorithm,
-                                                           advclust_algorithm[alg])
-                                }
-                            }
-                        }  else {
-                            selectedAlgorithm <- c(selectedAlgorithm,
-                                                   advclust_algorithm)
-                        }
-                    }
 
                     if (tolower(input$packages[n]) == tolower("amap")) {
                         if (length(input$algorithm) > 0) {
@@ -499,7 +454,7 @@ shinyServer(function(input, output, session) {
 
     # Event managed by the component that controls the management of directories
     observeEvent(
-        ignoreNULL = T,
+        ignoreNULL = TRUE,
         eventExpr = {
             input$dir
         },
@@ -510,7 +465,7 @@ shinyServer(function(input, output, session) {
             global$datapath <-
                 file.path(home, paste(unlist(dir()$path[-1]), collapse = .Platform$file.sep))
         },
-        ignoreInit = T
+        ignoreInit = TRUE
     )
 
 
@@ -550,7 +505,7 @@ shinyServer(function(input, output, session) {
                        type = "error")
         } else {
 
-            printFirstTable = F
+            printFirstTable = FALSE
 
             # We check if the user has marked that the data should be uploaded from a directory
             # or a dataframe
@@ -601,9 +556,9 @@ shinyServer(function(input, output, session) {
                                                               extensions = c('Buttons','ColReorder'),
                                                               options = list(
                                                                   colReorder = TRUE,
-                                                                  scrollX = T,
-                                                                  lengthChange = F,
-                                                                  scroller = T,
+                                                                  scrollX = TRUE,
+                                                                  lengthChange = FALSE,
+                                                                  scroller = TRUE,
                                                                   dom = 'Bfrtip',
                                                                   buttons =
                                                                       list(
@@ -629,7 +584,7 @@ shinyServer(function(input, output, session) {
                                                                           ))
                                                               )))
 
-                        printFirstTable = T
+                        printFirstTable = TRUE
 
                         shinyjs::show("plotImage1")
                         output$plotImage1 <- renderPlot({
@@ -660,9 +615,9 @@ shinyServer(function(input, output, session) {
                                                                   extensions = c('Buttons','ColReorder'),
                                                                   options = list(
                                                                       colReorder = TRUE,
-                                                                      scrollX = T,
-                                                                      lengthChange = F,
-                                                                      scroller = T,
+                                                                      scrollX = TRUE,
+                                                                      lengthChange = FALSE,
+                                                                      scroller = TRUE,
                                                                       dom = 'Bfrtip',
                                                                       buttons =
                                                                           list(
@@ -696,9 +651,9 @@ shinyServer(function(input, output, session) {
                                 DT::renderDataTable(
                                     result_internal$result,
                                     options = list(
-                                        scroller = T,
-                                        scrollX = T,
-                                        lengthChange = F,
+                                        scroller = TRUE,
+                                        scrollX = TRUE,
+                                        lengthChange = FALSE,
                                         dom = 'Bfrtip',
                                         buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
                                     )
@@ -731,18 +686,18 @@ shinyServer(function(input, output, session) {
                     output$best_evaluation1 <-
                         DT::renderDataTable(NULL,
                                             options = list(
-                                                scroller = T,
-                                                scrollX = T,
-                                                lengthChange = F,
+                                                scroller = TRUE,
+                                                scrollX = TRUE,
+                                                lengthChange = FALSE,
                                                 dom = 'Bfrtip',
                                                 buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
                                             ))
                     output$best_evaluation2 <-
                         DT::renderDataTable(NULL,
                                             options = list(
-                                                scroller = T,
-                                                scrollX = T,
-                                                lengthChange = F,
+                                                scroller = TRUE,
+                                                scrollX = TRUE,
+                                                lengthChange = FALSE,
                                                 dom = 'Bfrtip',
                                                 buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
                                             ))
@@ -783,9 +738,9 @@ shinyServer(function(input, output, session) {
                                                               extensions = c('Buttons','ColReorder'),
                                                               options = list(
                                                                   colReorder = TRUE,
-                                                                  scrollX = T,
-                                                                  lengthChange = F,
-                                                                  scroller = T,
+                                                                  scrollX = TRUE,
+                                                                  lengthChange = FALSE,
+                                                                  scroller = TRUE,
                                                                   dom = 'Bfrtip',
                                                                   buttons =
                                                                       list(
@@ -811,7 +766,7 @@ shinyServer(function(input, output, session) {
                                                                           ))
                                                               )))
 
-                        printFirstTable = T
+                        printFirstTable = TRUE
 
                         shinyjs::show("plotImage1")
                         output$plotImage1 <- renderPlot({
@@ -842,9 +797,9 @@ shinyServer(function(input, output, session) {
                                                                   extensions = c('Buttons','ColReorder'),
                                                                   options = list(
                                                                       colReorder = TRUE,
-                                                                      scrollX = T,
-                                                                      lengthChange = F,
-                                                                      scroller = T,
+                                                                      scrollX = TRUE,
+                                                                      lengthChange = FALSE,
+                                                                      scroller = TRUE,
                                                                       dom = 'Bfrtip',
                                                                       buttons =
                                                                           list(
@@ -878,9 +833,9 @@ shinyServer(function(input, output, session) {
                                 DT::renderDataTable(
                                     result_internal$result,
                                     options = list(
-                                        scroller = T,
-                                        scrollX = T,
-                                        lengthChange = F,
+                                        scroller = TRUE,
+                                        scrollX = TRUE,
+                                        lengthChange = FALSE,
                                         dom = 'Bfrtip',
                                         buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
                                     )
@@ -908,27 +863,27 @@ shinyServer(function(input, output, session) {
                 error = function(e) {
                     output$tableClustering <- DT::renderDataTable(NULL,
                                                                   options = list(
-                                                                      scroller = T,
-                                                                      scrollX = T,
-                                                                      lengthChange = F,
+                                                                      scroller = TRUE,
+                                                                      scrollX = TRUE,
+                                                                      lengthChange = FALSE,
                                                                       dom = 'Bfrtip',
                                                                       buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
                                                                   ))
                     output$best_evaluation1 <-
                         DT::renderDataTable(NULL,
                                             options = list(
-                                                scroller = T,
-                                                scrollX = T,
-                                                lengthChange = F,
+                                                scroller = TRUE,
+                                                scrollX = TRUE,
+                                                lengthChange = FALSE,
                                                 dom = 'Bfrtip',
                                                 buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
                                             ))
                     output$best_evaluation2 <-
                         DT::renderDataTable(NULL,
                                             options = list(
-                                                scroller = T,
-                                                scrollX = T,
-                                                lengthChange = F,
+                                                scroller = TRUE,
+                                                scrollX = TRUE,
+                                                lengthChange = FALSE,
                                                 dom = 'Bfrtip',
                                                 buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
                                             ))

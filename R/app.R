@@ -9,6 +9,7 @@
 #' Its operation is very simple, we can change the values and see the behavior
 #' quickly.
 #'
+#'
 #' @return GUI with the parameters of the algorithm and their representation in
 #' tables and graphs.
 #'
@@ -59,7 +60,7 @@ appClustering <- function() {
     system.file("shiny", "clustering", package = "Clustering")
   if (appDir == "") {
     stop("Could not find directory. Try re-installing `clustering`.",
-         call. = F)
+         call. = FALSE)
   }
 
   shiny::runApp(appDir, display.mode = "normal")
@@ -79,13 +80,13 @@ appClustering <- function() {
 #' you want to use training and test \code{basketball} attributes.
 #'
 #' @param packages character vector with the packets running the algorithm.
-#' \code{NULL} The seven packages implemented are: cluster, ClusterR, advclust,
-#' amap, apcluster, pvclust. \cr By default runs all packages.
+#'
+#' \code{NULL} The seven packages implemented are: cluster, ClusterR, amap,
+#' apcluster, pvclust. \cr By default runs all packages.
 #'
 #' @param algorithm character vector with the algorithms implemented within the
-#' package. \code{NULL} The algorithms implemented are: fuzzy_cm,fuzzy_gg,
-#' fuzzy_gk,hclust,apclusterK,agnes,clara,daisy, \cr diana,fanny,mona,pam,gmm,
-#' kmeans_arma,kmeans_rcpp,mini_kmeans,\cr pvclust.
+#' package. \code{NULL} The algorithms implemented are: hclust,apclusterK,agnes,clara,daisy,
+#' diana,fanny,mona,pam,gmm, kmeans_arma,kmeans_rcpp,mini_kmeans,pvclust.
 #'
 #' @param min An integer with the minimum number of clusters This data is
 #' necessary to indicate the minimum number of clusters when grouping the data.
@@ -106,7 +107,8 @@ appClustering <- function() {
 #' the distribution of the data. To be able to execute the algorithm it is necessary
 #' to indicate the number of clusters.
 #'
-#' \code{min} and \code{max}, the algorithms \code{algorithm} or packages#'
+#' \code{min} and \code{max}, the algorithms \code{algorithm} or packages.
+#'
 #' \code{packages} that we want to cluster and the metrics \code{metrics}.
 #'
 #'
@@ -147,8 +149,6 @@ appClustering <- function() {
 #' ClusterR GMM predict_GMM distance_matrix KMeans_rcpp predict_KMeans
 #' KMeans_arma MiniBatchKmeans predict_MBatchKMeans center_scale
 #'
-#' @importFrom
-#' advclust fuzzy.CM fuzzy.GG fuzzy.GK
 #'
 #' @importFrom
 #' pvclust pvclust pvpick
@@ -215,7 +215,8 @@ clustering <- function(path = NULL,
 
   ## Validation of input parameters
 
-  on.exit(options(scipen = 999))
+  config <- options(scipen = 999)
+  on.exit(options(config))
 
   if (is.null(path) && is.null(df)) {
     stop("You must fill in at least one of the fields: path or df")
@@ -327,11 +328,11 @@ clustering <- function(path = NULL,
 #' the value of the argument.
 #'
 #' @param packages Array defining the clustering package. The seven packages
-#' implemented are: cluster, ClusterR, advclust, amap, apcluster, pvclust.
+#' implemented are: cluster, ClusterR, amap, apcluster, pvclust.
 #' By default runs all packages.
 #'
 #' @param algorithm Array with the algorithms that implement the package.
-#' The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,hclust,apclusterK,
+#' The algorithms implemented are: hclust,apclusterK,
 #' agnes,clara,daisy,diana,fanny,mona,pam,gmm,kmeans_arma,kmeans_rcpp,
 #' mini_kmeans, pvclust.
 #'
@@ -457,7 +458,7 @@ execute_datasets <- function(path,
       )
   }
 
-  results <- as.data.frame(results$df_result, stringsAsFactors = F)
+  results <- as.data.frame(results$df_result, stringsAsFactors = FALSE)
 
   # Convert column to numeric
 
@@ -496,7 +497,7 @@ execute_datasets <- function(path,
 #' the value of the argument.
 #'
 #' @param algorithms_execute Character vector with the algorithms to be
-#' executed. The algorithms implemented are: fuzzy_cm,fuzzy_gg,fuzzy_gk,hclust,
+#' executed. The algorithms implemented are: hclust,
 #' apclusterK,agnes,clara,daisy,diana,fanny,mona,pam,gmm,kmeans_arma,
 #' kmeans_rcpp,mini_kmeans, pvclust.
 #'
@@ -766,7 +767,7 @@ execute_package_parallel <-
                   result_information[pos] = format(round(
                     x = as.numeric(result_information[pos]),
                     digits = 4
-                  ), scientific = F)
+                  ), scientific = FALSE)
                 }
 
                 if (attributes) {
@@ -836,7 +837,7 @@ execute_package_parallel <-
                         x = as.numeric(result_information_aux[pos_aux]),
                         digits = 4
                       ),
-                      scientific = F
+                      scientific = FALSE
                     )
                     pos_aux = pos_aux + 1
                   }
@@ -928,7 +929,7 @@ sort.clustering <- function(x, decreasing = TRUE, ...) {
   if (is.null(x))
     stop("The x field must be filled")
 
-  if (class(x) != "clustering")
+  if (!is(x, "clustering"))
     stop("The x field must be clustering type")
 
   #Catch dots arguments
@@ -979,6 +980,8 @@ sort.clustering <- function(x, decreasing = TRUE, ...) {
 #' Variation_information, Precision, Recall, F_measure, Fowlkes_mallows_index,
 #' Connectivity, Dunn, Silhouette and TimeAtt}.
 #'
+#' @return A \code{clustering} object filtered from the input parameters.
+#'
 #' @examples
 #'
 #' library(Clustering)
@@ -989,12 +992,12 @@ sort.clustering <- function(x, decreasing = TRUE, ...) {
 #' result[Precision > 0.14 & Recall > 0.11]
 #'
 
-"[.clustering" <- function(clustering, condition = T) {
+"[.clustering" <- function(clustering, condition = TRUE) {
 
   if (is.null(clustering))
     stop("The clustering field must be filled")
 
-  if (class(clustering) != "clustering")
+  if (!is(clustering, "clustering"))
     stop("The clustering field must be clustering type")
 
   filter <- substitute(condition, )
@@ -1060,7 +1063,7 @@ print.summary.clustering <- function(x, ...) {
     cat("Mean time for evaluation of external metrics:	\n")
     print(format(round(
       mean(x$result$Time), digits = 4
-    ), scientific = F))
+    ), scientific = FALSE))
     cat("\n")
   }
 
@@ -1068,7 +1071,7 @@ print.summary.clustering <- function(x, ...) {
     cat("Metric mean Entropy:	\n")
     print(format(round(mean(
       x$result$Entropy
-    ), digits = 4), scientific = F))
+    ), digits = 4), scientific = FALSE))
     cat("\n")
   }
 
@@ -1076,7 +1079,7 @@ print.summary.clustering <- function(x, ...) {
     cat("Metric mean Variation_information:	\n")
     print(format(round(
       mean(x$result$Variation_information), digits = 4
-    ), scientific = F))
+    ), scientific = FALSE))
     cat("\n")
   }
 
@@ -1084,7 +1087,7 @@ print.summary.clustering <- function(x, ...) {
     cat("Metric mean Precision:	\n")
     print(format(round(mean(
       x$result$Precision
-    ), digits = 4), scientific = F))
+    ), digits = 4), scientific = FALSE))
     cat("\n")
   }
 
@@ -1092,7 +1095,7 @@ print.summary.clustering <- function(x, ...) {
     cat("Metric mean Recall:	\n")
     print(format(round(mean(
       x$result$Recall
-    ), digits = 4), scientific = F))
+    ), digits = 4), scientific = FALSE))
     cat("\n")
   }
 
@@ -1100,7 +1103,7 @@ print.summary.clustering <- function(x, ...) {
     cat("Metric mean F_measure:	\n")
     print(format(round(mean(
       x$result$F_measure
-    ), digits = 4), scientific = F))
+    ), digits = 4), scientific = FALSE))
     cat("\n")
   }
 
@@ -1108,7 +1111,7 @@ print.summary.clustering <- function(x, ...) {
     cat("Metric mean Fowlkes_mallows_index:	\n")
     print(format(round(
       mean(x$result$Fowlkes_mallows_index), digits = 4
-    ), scientific = F))
+    ), scientific = FALSE))
     cat("\n")
   }
 
@@ -1607,6 +1610,8 @@ print.result_internal_algorithm_by_metric <- function(x, ...)
 #' is much easier. Therefore with this method we will be able to filter the data
 #' by metrics and see the data in a graphical way.
 #'
+#' @return Generate an image with the distribution of the clusters by metrics.
+#'
 #' @importFrom
 #'
 #' ggplot2 ggplot aes_string geom_point xlab ylab labs scale_y_continuous
@@ -1650,8 +1655,8 @@ plot_clustering <- function(df, metric) {
 
   isInternalMetrics <- is_Internal_Metrics(metric)
 
-  if (isExternalMetrics == F &&
-      isInternalMetrics == F)
+  if (isExternalMetrics == FALSE &&
+      isInternalMetrics == FALSE)
     stop("The metric field indicated is not correct")
 
   df_best_ranked <- NULL
@@ -1675,11 +1680,11 @@ plot_clustering <- function(df, metric) {
 
   break_points <- (seq(0, maximum, by = interval))
 
-  exits_metric = F
+  exits_metric = FALSE
 
   for (col in colnames(df_best_ranked)) {
     if (tolower(col) == tolower(metric)) {
-      exits_metric = T
+      exits_metric = TRUE
     }
   }
 
@@ -1718,6 +1723,8 @@ plot_clustering <- function(df, metric) {
 #' @details When we work in latex format and we need to create a table to export
 #' the results, with this method we can export the results of the clustering
 #' algorithm to latex.
+#'
+#' @return A file in Latex format with the results of the external metrics.
 #'
 #' @details
 #'
@@ -1758,7 +1765,7 @@ export_file_external <- function(df, path = NULL) {
   tableExternal <-
     xtable(xtable(
       tableExternal,
-      include.rownames = F,
+      include.rownames = FALSE,
       digits = 4
     ))
 
@@ -1785,6 +1792,8 @@ export_file_external <- function(df, path = NULL) {
 #' @details When we work in latex format and we need to create a table to export
 #' the results, with this method we can export the results of the clustering
 #' algorithm to latex.
+#'
+#' @return A file in Latex format with the results of the internal metrics.
 #'
 #' @export
 #'
@@ -1822,7 +1831,7 @@ export_file_internal <- function(df, path = NULL) {
   tableInternal <-
     xtable(xtable(
       tableInternal,
-      include.rownames = F,
+      include.rownames = FALSE,
       digits = 4
     ))
 
